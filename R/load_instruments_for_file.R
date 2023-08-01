@@ -16,13 +16,11 @@
 #' @param path The path to the file to load instruments from.
 #' @return A JSON response from the API containing the processed contents.
 #'
-#' @importFrom base paste basename
-#' @importFrom base readLines
-#' @importFrom base file_ext
 #' @importFrom uuid UUIDgenerate
 #' @importFrom base64enc base64encode
 #' @importFrom jsonlite toJSON
 #' @importFrom httr POST add_headers content
+#' @importFrom tools file_ext
 #'
 #' @examples
 #' # Load instruments from a PDF file
@@ -47,11 +45,11 @@ load_instruments_from_file = function(path){
     file_string = tobase64(path)
     if(file_ext(path) == "pdf")
     {
-      file_string = paste("data:application/", file_ext(path),";base64,", base64_file, sep = "")
+      file_string = paste("data:application/", file_ext(path),";base64,", file_string, sep = "")
     }
     else
     {
-      file_string = paste("data:application/", "vnd.openxmlformats-officedocument.spreadsheetml.sheet",";base64,", base64_file, sep = "")
+      file_string = paste("data:application/", "vnd.openxmlformats-officedocument.spreadsheetml.sheet",";base64,", file_string, sep = "")
 
     }
 
@@ -72,7 +70,7 @@ load_instruments_from_file = function(path){
               file_type = file_ext(path),
               content = file_string))
   #convert to json
-  data_json = toJSON(data,pretty=FALSE,auto_unbox=TRUE)
+  data_json = jsonlite::toJSON(data,pretty=FALSE,auto_unbox=TRUE)
   #add brackets
   #send contents
   #change url to be an enviroment variable
@@ -83,29 +81,7 @@ load_instruments_from_file = function(path){
   return(conten)
 
 }
-#' Convert File to Base64
-#'
-#' This function takes a file path or URL as input and converts the file content to a
-#' base64-encoded string. If the input is a valid URL, it downloads the file first and
-#' then converts it to base64. If the input is a local file path, it reads the file as
-#' binary and converts the binary data to base64.
-#'
-#' @param path A file path or URL to convert to base64.
-#' @return A base64-encoded string representing the content of the file.
-#'
-#' @importFrom base is_url_file
-#' @importFrom base unlink
-#' @importFrom base readBin
-#' @importFrom base file.info
-#' @importFrom base tempfile
-#' @importFrom utils download.file
-#' @importFrom base64enc base64encode
-#'
-#' @examples
-#' # Convert a remote PDF file to base64
-#' pdf_url <- "https://www.apa.org/depression-guideline/patient-health-questionnaire.pdf"
-#' pdf_base64 <- tobase64(pdf_url)
-#'
+
 tobase64 = function(path){
 
   # Check if the string is a valid URL
@@ -120,7 +96,7 @@ tobase64 = function(path){
 
     # Download the PDF file
     temp_file <- tempfile()  # Create a temporary file to store the downloaded PDF
-    download.file(link, temp_file, mode = "wb")  # 'wb' mode for binary download
+    utils::download.file(link, temp_file, mode = "wb")  # 'wb' mode for binary download
 
     pdf_binary = temp_file
 
@@ -142,23 +118,7 @@ tobase64 = function(path){
   return(pdf_base64)
 
 }
-#' Check if a URL points to a file.
-#'
-#' This function checks if a given URL likely points to a file based on the content
-#' type obtained from an HTTP HEAD request. It performs an HTTP HEAD request to the
-#' specified URL and checks if the content type indicates a file, such as PDF, CSV,
-#' TXT, etc.
-#'
-#' @param url The URL to check.
-#' @return \code{TRUE} if the URL likely points to a file, and \code{FALSE} otherwise.
-#'
-#' @importFrom httr HEAD
-#' @importFrom httr headers
-#' @importFrom base grepl
-#'
-#' @examples
-#' is_url_file("https://www.apa.org/depression-guideline/patient-health-questionnaire.pdf")
-#'
+
 is_url_file <- function(url) {
   # Perform an HTTP HEAD request to get the headers
   response <- httr::HEAD(url)
