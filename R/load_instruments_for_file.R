@@ -1,3 +1,5 @@
+#source("./R/globals.R")
+
 #' Load Instruments from File
 #'
 #' This function loads instruments from a file specified by the \code{path}
@@ -32,7 +34,7 @@ load_instruments_from_file = function(path){
   file_string = ""
 
   #if the file is text, it just returns the text file as a string
-  if(file_ext(path) == "txt")
+  if(tools::file_ext(path) == "txt")
   {
     # Read the text file as lines
     file_lines <- readLines(path)
@@ -43,9 +45,9 @@ load_instruments_from_file = function(path){
   }
   else {
     file_string = tobase64(path)
-    if(file_ext(path) == "pdf")
+    if(tools::file_ext(path) == "pdf")
     {
-      file_string = paste("data:application/", file_ext(path),";base64,", file_string, sep = "")
+      file_string = paste("data:application/", tools::file_ext(path),";base64,", file_string, sep = "")
     }
     else
     {
@@ -62,19 +64,19 @@ load_instruments_from_file = function(path){
   )
 
   # Generate a random UUID
-  random_uuid <- paste(UUIDgenerate(output = "raw"), collapse = "")
+  random_uuid <- paste(uuid::UUIDgenerate(output = "raw"), collapse = "")
   #app might not necessarily be a base64
 
   data = list(list(file_id =  random_uuid,
               file_name = basename(path),
-              file_type = file_ext(path),
+              file_type = tools::file_ext(path),
               content = file_string))
   #convert to json
   data_json = jsonlite::toJSON(data,pretty=FALSE,auto_unbox=TRUE)
   #add brackets
   #send contents
   #change url to be an enviroment variable
-  res <- httr::POST(url = "https://api.harmonydata.org/text/parse", encode = "json", httr::add_headers(.headers=headers), body = data_json)
+  res <- httr::POST(url = paste0(pkg.globals$url, "/text/parse"), encode = "json", httr::add_headers(.headers=headers), body = data_json)
   #contents
   conten = content(res)
   #
@@ -83,10 +85,16 @@ load_instruments_from_file = function(path){
 }
 
 tobase64 = function(path){
-
-  # Check if the string is a valid URL
-  is_link <- is_url_file(path)
-
+  is_link = FALSE
+  if(file.exists(path))
+  {
+    is_link = FALSE
+  }
+  else
+  {
+    # Check if the string is a valid URL
+    is_link <- is_url_file(path)
+  }
   # Check if the file is a local file (not a link)
   is_local_file <- !is_link
 
@@ -101,7 +109,7 @@ tobase64 = function(path){
     pdf_binary = temp_file
 
     # Convert the binary data to base64 encoded string
-    pdf_base64 <- base64encode(pdf_binary)
+    pdf_base64 <- base64enc::base64encode(pdf_binary)
 
     # Remove the temporary file
     unlink(temp_file)
@@ -113,7 +121,7 @@ tobase64 = function(path){
     pdf_binary <- readBin(path, "raw", file.info(path)$size)
 
     # Convert the binary data to base64 encoded string
-    pdf_base64 <- base64encode(pdf_binary)
+    pdf_base64 <- base64enc::base64encode(pdf_binary)
   }
   return(pdf_base64)
 
@@ -121,6 +129,7 @@ tobase64 = function(path){
 
 is_url_file <- function(url) {
   # Perform an HTTP HEAD request to get the headers
+
   response <- httr::HEAD(url)
 
   # Get the content type from the headers
@@ -131,6 +140,4 @@ is_url_file <- function(url) {
 
   return(is_file)
 }
-
-
 

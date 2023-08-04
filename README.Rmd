@@ -1,0 +1,61 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# harmonydata
+
+<!-- badges: start -->
+
+<!-- badges: end -->
+
+The goal of harmonydata is to ...
+
+## Getting started with the Harmony R library
+
+### Installing R library
+
+You can install the development version of harmonydata from [GitHub](https://github.com/harmonydata/harmony_r) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("harmonydata/harmony_r")
+```
+
+## Parsing a raw file into an Instrument
+
+If you want to read in a raw (unstructured) PDF or Excel file, you can do this via a POST request to the REST API. This will convert the file into an Instrument object in JSON.It returns the instrument as a list.
+
+```{r example}
+library(harmonydata)
+instrument = load_instruments_from_file(path = "examples/GAD-7.pdf")
+instrument
+
+```
+
+You can also input a url containing the questionnaire.
+
+```{r}
+instrument_2 = load_instruments_from_file("https://medfam.umontreal.ca/wp-content/uploads/sites/16/GAD-7-fran%C3%A7ais.pdf") 
+instrument_2
+```
+
+## Matching instruments
+
+You can get a list containing the results of the match.
+
+```{r}
+instruments = append(instrument, instrument_2)
+match = match_instruments(instruments)
+match
+```

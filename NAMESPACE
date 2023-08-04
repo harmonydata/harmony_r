@@ -2,6 +2,10 @@
 
 export(get_example_instruments)
 export(load_instruments_from_file)
+export(match_instruments)
+export(set_url)
+import(httr)
+import(jsonlite)
 importFrom(base64enc,base64encode)
 importFrom(httr,POST)
 importFrom(httr,add_headers)
