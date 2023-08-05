@@ -1,6 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^LICENSE\.md$
+^LICENCE\.md$
+^LICENSE
 ^README\.Rmd$
 ^README\.md$
 ^examples$

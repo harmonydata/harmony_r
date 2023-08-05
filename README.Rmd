@@ -15,12 +15,6 @@ knitr::opts_chunk$set(
 
 # harmonydata
 
-<!-- badges: start -->
-
-<!-- badges: end -->
-
-The goal of harmonydata is to ...
-
 ## Getting started with the Harmony R library
 
 ### Installing R library
@@ -39,7 +33,7 @@ If you want to read in a raw (unstructured) PDF or Excel file, you can do this v
 ```{r example}
 library(harmonydata)
 instrument = load_instruments_from_file(path = "examples/GAD-7.pdf")
-instrument
+names(instrument[[1]])
 
 ```
 
@@ -47,15 +41,20 @@ You can also input a url containing the questionnaire.
 
 ```{r}
 instrument_2 = load_instruments_from_file("https://medfam.umontreal.ca/wp-content/uploads/sites/16/GAD-7-fran%C3%A7ais.pdf") 
-instrument_2
+names(instrument_2[[1]])
 ```
 
 ## Matching instruments
 
-You can get a list containing the results of the match.
-
+You can get a list containing the results of the match.Here we can see a list of similarity score for each question comapred to all the other questions in th other questionaire.
 ```{r}
 instruments = append(instrument, instrument_2)
 match = match_instruments(instruments)
-match
+names(match)
+```
+
+Here is how the matches look like.
+```{r}
+
+match$matches
 ```
