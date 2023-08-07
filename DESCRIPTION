@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Omar Hassoun
 Maintainer: Omar Hassoun <omtarful@gmail.com>
 Description: Harmony is a tool using AI which allows you to compare items from questionnaires and identify similar content. You can try Harmony at https://app.harmonydata.org and you can read our blog at https://harmonydata.org/blog/.
-License: MIT + file LICENSE
+License: MIT + file LICENCE
 Encoding: UTF-8
 LazyData: true
 Imports:
