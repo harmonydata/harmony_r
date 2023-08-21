@@ -4,7 +4,7 @@ Title: R library for Harmony
 Version: 0.1.0
 Author: Omar Hassoun
 Maintainer: Omar Hassoun <omtarful@gmail.com>
-Description: Harmony is a tool using AI which allows you to compare items from questionnaires and identify similar content. You can try Harmony at https://harmonydata.ac.uk/app and you can read our blog at https://harmonydata.ac.uk/blog/.
+Description: Harmony is a tool using AI which allows you to compare items from questionnaires and identify similar content. You can try Harmony at https://harmonydata.ac.uk/app and you can read our blog at https://harmonydata.ac.uk/blog/. Documentation at https://harmonydata.ac.uk/harmony-r-released/
 License: MIT + file LICENCE
 Encoding: UTF-8
 LazyData: true
