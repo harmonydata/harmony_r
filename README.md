@@ -11,7 +11,8 @@ You can install the development version of harmonydata from
 [GitHub](https://github.com/harmonydata/harmony_r) with:
 
 ``` r
-# install.packages("devtools")
+# install.packages("devtools") # If you don't have devtools installed already.
+library(devtools)
 devtools::install_github("harmonydata/harmony_r")
 ```
 
