@@ -50,5 +50,5 @@ matched_instruments <- match_instruments(instruments_list)
 
 }
 \references{
-For more information about the Harmony Data API, visit: \url{https://api.harmonydata.org}
+For more information about the Harmony Data API, visit: \url{https://api.harmonydata.org/docs}
 }

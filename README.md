@@ -11,9 +11,46 @@ You can install the development version of harmonydata from
 [GitHub](https://github.com/harmonydata/harmony_r) with:
 
 ``` r
-# install.packages("devtools") # If you don't have devtools installed already.
+#install.packages("devtools") # If you don't have devtools installed already.
 library(devtools)
+#> Warning: package 'devtools' was built under R version 4.3.1
+#> Loading required package: usethis
+#> Warning: package 'usethis' was built under R version 4.3.1
 devtools::install_github("harmonydata/harmony_r")
+#> Downloading GitHub repo harmonydata/harmony_r@HEAD
+#> curl (5.0.1 -> 5.0.2) [CRAN]
+#> uuid (1.1-0 -> 1.1-1) [CRAN]
+#> httr (1.4.6 -> 1.4.7) [CRAN]
+#> Installing 3 packages: curl, uuid, httr
+#> Installing packages into 'C:/Users/User/AppData/Local/Temp/Rtmpon8oJY/temp_libpath4be44a341dc1'
+#> (as 'lib' is unspecified)
+#> package 'curl' successfully unpacked and MD5 sums checked
+#> package 'uuid' successfully unpacked and MD5 sums checked
+#> package 'httr' successfully unpacked and MD5 sums checked
+#> 
+#> The downloaded binary packages are in
+#>  C:\Users\User\AppData\Local\Temp\RtmpYhs6GZ\downloaded_packages
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>          checking for file 'C:\Users\User\AppData\Local\Temp\RtmpYhs6GZ\remotes38bc54e9367e\harmonydata-harmony_r-0701d6d/DESCRIPTION' ...  ✔  checking for file 'C:\Users\User\AppData\Local\Temp\RtmpYhs6GZ\remotes38bc54e9367e\harmonydata-harmony_r-0701d6d/DESCRIPTION'
+#>       ─  preparing 'harmonydata':
+#>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✔  checking DESCRIPTION meta-information
+#>       ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>      Omitted 'LazyData' from DESCRIPTION
+#>       ─  building 'harmonydata_0.1.0.tar.gz'
+#>      
+#> 
+#> Installing package into 'C:/Users/User/AppData/Local/Temp/Rtmpon8oJY/temp_libpath4be44a341dc1'
+#> (as 'lib' is unspecified)
+```
+
+## Setting up domain
+
+Before starting, you can set up the domain for harmony. Using this
+function. By default it uses <https://api.harmonydata.org>
+
+``` r
+harmonydata::set_url()
 ```
 
 ## Parsing a raw file into an Instrument
