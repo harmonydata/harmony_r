@@ -3,7 +3,7 @@
 # Copyright (c) 2023 Ulster University (https://www.ulster.ac.uk)
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
+# of this software and associated documentation files (the 'Software'), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
@@ -19,22 +19,21 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-#
 
-#' Retrieve Example Instruments from Harmony Data API
+#' Retrieve Example Instruments from 'Harmony Data API'
 #'
-#' This function retrieves example instruments from the Harmony Data API
+#' This function retrieves example instruments from the 'Harmony Data API'
 #' using an HTTP POST request.
 #'
 #' @usage
 #' get_example_instruments()
 #'
 #' @return
-#' A JSON-formatted content representing example instruments retrieved
-#' from the Harmony Data API.
+#' A list representing example instruments retrieved
+#' from the 'Harmony Data API'.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Load required libraries (httr) and call the function
 #' require(httr)
 #' instruments <- get_example_instruments()
@@ -46,6 +45,7 @@
 #' @importFrom httr POST content
 #'
 #' @export
+#' @author Ulster University [cph]
 get_example_instruments <- function() {
 
   headers = c(

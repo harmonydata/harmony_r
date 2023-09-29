@@ -10,13 +10,14 @@ match_instruments(instruments)
 \item{instruments}{A list of instruments to be matched.}
 }
 \value{
-A list of matched instruments.
+A list of matched instruments returned from the 'Harmony Data API'.
 }
 \description{
 This function takes a list of instruments, converts it to a format acceptable by the database,
-and matches the instruments using the Harmony Data API. It returns the matched instruments.
+and matches the instruments using the 'Harmony Data API'. It returns the matched instruments.
 }
 \examples{
+\donttest{
 instruments_list <- list(
   list(
     instrument_id = "id1",
@@ -49,6 +50,11 @@ instruments_list <- list(
 matched_instruments <- match_instruments(instruments_list)
 
 }
+
+}
 \references{
-For more information about the Harmony Data API, visit: \url{https://api.harmonydata.org/docs}
+For more information about the 'Harmony Data API', visit: \url{https://api.harmonydata.org/docs}
+}
+\author{
+Ulster University [cph]
 }

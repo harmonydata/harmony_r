@@ -2,26 +2,34 @@
 % Please edit documentation in R/globals.R
 \name{set_url}
 \alias{set_url}
-\title{Set Harmony URL}
+\title{Set 'Harmony' URL}
 \usage{
 set_url(harmony_url = "https://api.harmonydata.org")
 }
 \arguments{
-\item{harmony_url}{The Harmony API URL to be set. (default: "https://api.harmonydata.org")}
+\item{harmony_url}{The 'Harmony' API URL to be set. (default: 'https://api.harmonydata.org')}
+}
+\value{
+No return value, called for side effects.
 }
 \description{
-This function sets the Harmony API URL to be used in the package. By default,
-it uses the production Harmony API (https://api.harmonydata.org), but you can
+This function sets the 'Harmony' API URL to be used in the package. By default,
+it uses the production 'Harmony' API ('https://api.harmonydata.org'), but you can
 override it by providing a different URL.
 }
 \details{
-The `pkg.globals$url` variable is a global variable that holds the Harmony API URL
+The \code{pkg.globals$url} variable is a global variable that holds the 'Harmony' API URL
 to be used in the package. Once you set the URL using this function, it will be
 used in all the relevant functions within the package.
 }
 \examples{
-set_url("https://staging.harmonydata.org")
-set_url() # Will set the URL back to the default "https://api.harmonydata.org"
+\donttest{
+set_url('https://staging.harmonydata.org')
+set_url() # Will set the URL back to the default 'https://api.harmonydata.org'
+}
 
+}
+\author{
+Ulster University [cph]
 }
 \keyword{internal}

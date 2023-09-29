@@ -3,7 +3,7 @@
 # Copyright (c) 2023 Ulster University (https://www.ulster.ac.uk)
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
+# of this software and associated documentation files (the 'Software'), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
@@ -23,13 +23,13 @@
 #' Match Instruments Function
 #'
 #' This function takes a list of instruments, converts it to a format acceptable by the database,
-#' and matches the instruments using the Harmony Data API. It returns the matched instruments.
+#' and matches the instruments using the 'Harmony Data API'. It returns the matched instruments.
 #'
 #' @param instruments A list of instruments to be matched.
-#'
-#' @return A list of matched instruments.
+#' @return A list of matched instruments returned from the 'Harmony Data API'.
 #'
 #' @examples
+#' \donttest{
 #' instruments_list <- list(
 #'   list(
 #'     instrument_id = "id1",
@@ -61,13 +61,16 @@
 #' )
 #' matched_instruments <- match_instruments(instruments_list)
 #'
+#' }
+#'
 #' @import jsonlite
 #' @import httr
 #'
 #' @references
-#' For more information about the Harmony Data API, visit: \url{https://api.harmonydata.org/docs}
+#' For more information about the 'Harmony Data API', visit: \url{https://api.harmonydata.org/docs}
 #'
 #' @export
+#' @author Ulster University [cph]
 match_instruments <- function(instruments){
 #most of the work is simply creating the body
   #steps to create the body

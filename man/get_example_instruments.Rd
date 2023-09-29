@@ -2,20 +2,20 @@
 % Please edit documentation in R/get_example_instruments.R
 \name{get_example_instruments}
 \alias{get_example_instruments}
-\title{Retrieve Example Instruments from Harmony Data API}
+\title{Retrieve Example Instruments from 'Harmony Data API'}
 \usage{
 get_example_instruments()
 }
 \value{
-A JSON-formatted content representing example instruments retrieved
-from the Harmony Data API.
+A list representing example instruments retrieved
+from the 'Harmony Data API'.
 }
 \description{
-This function retrieves example instruments from the Harmony Data API
+This function retrieves example instruments from the 'Harmony Data API'
 using an HTTP POST request.
 }
 \examples{
-\dontrun{
+\donttest{
 # Load required libraries (httr) and call the function
 require(httr)
 instruments <- get_example_instruments()
@@ -24,4 +24,7 @@ instruments <- get_example_instruments()
 print(instruments)
 }
 
+}
+\author{
+Ulster University [cph]
 }

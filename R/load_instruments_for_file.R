@@ -3,7 +3,7 @@
 # Copyright (c) 2023 Ulster University (https://www.ulster.ac.uk)
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
+# of this software and associated documentation files (the 'Software'), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
@@ -20,24 +20,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-
 #' Load Instruments from File
 #'
 #' This function loads instruments from a file specified by the \code{path}
 #' parameter and sends the file content to an API for further processing.
-#' It also accepts a url leading to a file.
-#'
-#' If the file is a text file (with extension .txt), it returns the text file's
-#' content as a string. Otherwise, it converts the file content to a base64-encoded
-#' string and sends it to the API. The supported file types for conversion are PDF,
-#' and XLSX (Excel) files.
-#'
-#' The function generates a random UUID to uniquely identify the file and sends
-#' the file name, file type, and content to the API in JSON format and returns
-#' a list of instruments.
+#' It also accepts a URL leading to a file.
 #'
 #' @param path The path to the file to load instruments from.
-#' @return A JSON response from the API containing the processed contents.
+#' @return A list of instruments returned from the API.
 #'
 #' @importFrom uuid UUIDgenerate
 #' @importFrom base64enc base64encode
@@ -46,11 +36,14 @@
 #' @importFrom tools file_ext
 #'
 #' @examples
+#' \donttest{
 #' # Load instruments from a PDF file
 #' pdf_file <- "https://www.apa.org/depression-guideline/patient-health-questionnaire.pdf"
 #' response <- load_instruments_from_file(pdf_file)
+#' }
 #'
 #' @export
+#' @author Ulster University [cph]
 load_instruments_from_file = function(path){
   file_string = ""
 

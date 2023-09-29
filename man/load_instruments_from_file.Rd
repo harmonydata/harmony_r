@@ -10,26 +10,21 @@ load_instruments_from_file(path)
 \item{path}{The path to the file to load instruments from.}
 }
 \value{
-A JSON response from the API containing the processed contents.
+A list of instruments returned from the API.
 }
 \description{
 This function loads instruments from a file specified by the \code{path}
 parameter and sends the file content to an API for further processing.
-It also accepts a url leading to a file.
-}
-\details{
-If the file is a text file (with extension .txt), it returns the text file's
-content as a string. Otherwise, it converts the file content to a base64-encoded
-string and sends it to the API. The supported file types for conversion are PDF,
-and XLSX (Excel) files.
-
-The function generates a random UUID to uniquely identify the file and sends
-the file name, file type, and content to the API in JSON format and returns
-a list of instruments.
+It also accepts a URL leading to a file.
 }
 \examples{
+\donttest{
 # Load instruments from a PDF file
 pdf_file <- "https://www.apa.org/depression-guideline/patient-health-questionnaire.pdf"
 response <- load_instruments_from_file(pdf_file)
+}
 
+}
+\author{
+Ulster University [cph]
 }
