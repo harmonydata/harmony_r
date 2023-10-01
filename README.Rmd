@@ -67,3 +67,21 @@ Here is how the matches look like.
 
 match$matches
 ```
+
+# Running harmonydata locally from a docker image
+To run harmonydata locally, first you need to pull the docker image using the terminal.
+
+## 1. Pull docker image
+```shell
+docker pull harmonydata/harmonywithtika
+```
+## 2. Run docker image
+```shell
+docker run -p 8080:80 harmonyapi
+```
+## 3. Configure harmonydata to run locally
+Set url to use localhost. Don't forget to expose port 8080:
+
+```{r}
+set_url(harmony_url = "http://localhost:8080")
+```

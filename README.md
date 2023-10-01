@@ -13,26 +13,13 @@ You can install the development version of harmonydata from
 ``` r
 #install.packages("devtools") # If you don't have devtools installed already.
 library(devtools)
-#> Warning: package 'devtools' was built under R version 4.3.1
 #> Loading required package: usethis
-#> Warning: package 'usethis' was built under R version 4.3.1
 devtools::install_github("harmonydata/harmony_r")
 #> Downloading GitHub repo harmonydata/harmony_r@HEAD
-#> curl (5.0.1 -> 5.0.2) [CRAN]
-#> uuid (1.1-0 -> 1.1-1) [CRAN]
-#> httr (1.4.6 -> 1.4.7) [CRAN]
-#> Installing 3 packages: curl, uuid, httr
-#> Installing packages into 'C:/Users/User/AppData/Local/Temp/Rtmpon8oJY/temp_libpath4be44a341dc1'
-#> (as 'lib' is unspecified)
-#> package 'curl' successfully unpacked and MD5 sums checked
-#> package 'uuid' successfully unpacked and MD5 sums checked
-#> package 'httr' successfully unpacked and MD5 sums checked
 #> 
-#> The downloaded binary packages are in
-#>  C:\Users\User\AppData\Local\Temp\RtmpYhs6GZ\downloaded_packages
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>          checking for file 'C:\Users\User\AppData\Local\Temp\RtmpYhs6GZ\remotes38bc54e9367e\harmonydata-harmony_r-0701d6d/DESCRIPTION' ...  ✔  checking for file 'C:\Users\User\AppData\Local\Temp\RtmpYhs6GZ\remotes38bc54e9367e\harmonydata-harmony_r-0701d6d/DESCRIPTION'
-#>       ─  preparing 'harmonydata':
+#>          checking for file 'C:\Users\omtar\AppData\Local\Temp\RtmpgjLABs\remotes4c685b806daa\harmonydata-harmony_r-d617b0e/DESCRIPTION' ...     checking for file 'C:\Users\omtar\AppData\Local\Temp\RtmpgjLABs\remotes4c685b806daa\harmonydata-harmony_r-d617b0e/DESCRIPTION' ...   ✔  checking for file 'C:\Users\omtar\AppData\Local\Temp\RtmpgjLABs\remotes4c685b806daa\harmonydata-harmony_r-d617b0e/DESCRIPTION' (606ms)
+#>       ─  preparing 'harmonydata': (337ms)
 #>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✔  checking DESCRIPTION meta-information
 #>       ─  checking for LF line-endings in source and make files and shell scripts
 #>   ─  checking for empty or unneeded directories
@@ -40,7 +27,7 @@ devtools::install_github("harmonydata/harmony_r")
 #>       ─  building 'harmonydata_0.1.0.tar.gz'
 #>      
 #> 
-#> Installing package into 'C:/Users/User/AppData/Local/Temp/Rtmpon8oJY/temp_libpath4be44a341dc1'
+#> Installing package into 'C:/Users/omtar/AppData/Local/Temp/RtmpCQdPm9/temp_libpath29ac5ffb2beb'
 #> (as 'lib' is unspecified)
 ```
 
@@ -710,4 +697,29 @@ match$matches
 #> 
 #> [[14]][[14]]
 #> [1] 1
+```
+
+# Running harmonydata locally from a docker image
+
+To run harmonydata locally, first you need to pull the docker image
+using the terminal.
+
+## 1. Pull docker image
+
+``` shell
+docker pull harmonydata/harmonywithtika
+```
+
+## 2. Run docker image
+
+``` shell
+docker run -p 8080:80 harmonyapi
+```
+
+## 3. Configure harmonydata to run locally
+
+Set url to use localhost. Don’t forget to expose port 8080:
+
+``` r
+set_url(harmony_url = "http://localhost:8080")
 ```
