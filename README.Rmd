@@ -29,7 +29,7 @@ devtools::install_github("harmonydata/harmony_r")
 
 ## Setting up domain
 
-Before starting, you can set up the domain for harmony. Using this function. By default it uses [https://api.harmonydata.](https://api.harmonydata.ac.uk){.uri}
+Before starting, you can set up the domain for harmony. Using this function. By default it uses [https://api.harmonydata.ac.uk](https://api.harmonydata.ac.uk){.uri}
 
 ```{r}
 harmonydata::set_url()

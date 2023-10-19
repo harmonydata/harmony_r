@@ -21,15 +21,15 @@ devtools::install_github("harmonydata/harmony_r")
 #> curl (5.0.1 -> 5.1.0) [CRAN]
 #> uuid (1.1-0 -> 1.1-1) [CRAN]
 #> Installing 2 packages: curl, uuid
-#> Installing packages into 'C:/Users/User/AppData/Local/Temp/RtmpSayLpV/temp_libpath46f410292a6f'
+#> Installing packages into 'C:/Users/User/AppData/Local/Temp/RtmpSayLpV/temp_libpath46f41b34616d'
 #> (as 'lib' is unspecified)
 #> package 'curl' successfully unpacked and MD5 sums checked
 #> package 'uuid' successfully unpacked and MD5 sums checked
 #> 
 #> The downloaded binary packages are in
-#>  C:\Users\User\AppData\Local\Temp\RtmpkzkT0V\downloaded_packages
+#>  C:\Users\User\AppData\Local\Temp\Rtmp2B8YOS\downloaded_packages
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>          checking for file 'C:\Users\User\AppData\Local\Temp\RtmpkzkT0V\remotes1ef815ca2c82\harmonydata-harmony_r-1f18f78/DESCRIPTION' ...  ✔  checking for file 'C:\Users\User\AppData\Local\Temp\RtmpkzkT0V\remotes1ef815ca2c82\harmonydata-harmony_r-1f18f78/DESCRIPTION'
+#>          checking for file 'C:\Users\User\AppData\Local\Temp\Rtmp2B8YOS\remotes10e0572c1eef\harmonydata-harmony_r-9d0467a/DESCRIPTION' ...     checking for file 'C:\Users\User\AppData\Local\Temp\Rtmp2B8YOS\remotes10e0572c1eef\harmonydata-harmony_r-9d0467a/DESCRIPTION' ...   ✔  checking for file 'C:\Users\User\AppData\Local\Temp\Rtmp2B8YOS\remotes10e0572c1eef\harmonydata-harmony_r-9d0467a/DESCRIPTION'
 #>       ─  preparing 'harmonydata':
 #>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✔  checking DESCRIPTION meta-information
 #>       ─  checking for LF line-endings in source and make files and shell scripts
@@ -38,15 +38,14 @@ devtools::install_github("harmonydata/harmony_r")
 #>       ─  building 'harmonydata_0.1.1.tar.gz'
 #>      
 #> 
-#> Installing package into 'C:/Users/User/AppData/Local/Temp/RtmpSayLpV/temp_libpath46f410292a6f'
+#> Installing package into 'C:/Users/User/AppData/Local/Temp/RtmpSayLpV/temp_libpath46f41b34616d'
 #> (as 'lib' is unspecified)
 ```
 
 ## Setting up domain
 
 Before starting, you can set up the domain for harmony. Using this
-function. By default it uses <a href="https://api.harmonydata.ac.uk"
-class="uri">https://api.harmonydata.</a>
+function. By default it uses <https://api.harmonydata.ac.uk>
 
 ``` r
 harmonydata::set_url()
