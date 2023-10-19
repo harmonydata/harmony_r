@@ -21,14 +21,14 @@
 # SOFTWARE.
 
 pkg.globals <- new.env()
-pkg.globals$url <- 'https://api.harmonydata.org'
+pkg.globals$url <- 'https://api.harmonydata.ac.uk'
 #' Set 'Harmony' URL
 #'
 #' This function sets the 'Harmony' API URL to be used in the package. By default,
-#' it uses the production 'Harmony' API ('https://api.harmonydata.org'), but you can
+#' it uses the production 'Harmony' API ('https://api.harmonydata.ac.uk'), but you can
 #' override it by providing a different URL.
 #'
-#' @param harmony_url The 'Harmony' API URL to be set. (default: 'https://api.harmonydata.org')
+#' @param harmony_url The 'Harmony' API URL to be set. (default: 'https://api.harmonydata.ac.uk')
 #' @keywords internal
 #'
 #' @details
@@ -39,7 +39,7 @@ pkg.globals$url <- 'https://api.harmonydata.org'
 #' @examples
 #' \donttest{
 #' set_url('https://staging.harmonydata.org')
-#' set_url() # Will set the URL back to the default 'https://api.harmonydata.org'
+#' set_url() # Will set the URL back to the default 'https://api.harmonydata.ac.uk'
 #' }
 #'
 #' @return
@@ -47,6 +47,6 @@ pkg.globals$url <- 'https://api.harmonydata.org'
 #'
 #' @export
 #' @author Ulster University [cph]
-set_url <- function(harmony_url = 'https://api.harmonydata.org') {
+set_url <- function(harmony_url = 'https://api.harmonydata.ac.uk') {
   pkg.globals$url <- harmony_url
 }

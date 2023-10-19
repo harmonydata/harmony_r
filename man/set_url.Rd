@@ -4,17 +4,17 @@
 \alias{set_url}
 \title{Set 'Harmony' URL}
 \usage{
-set_url(harmony_url = "https://api.harmonydata.org")
+set_url(harmony_url = "https://api.harmonydata.ac.uk")
 }
 \arguments{
-\item{harmony_url}{The 'Harmony' API URL to be set. (default: 'https://api.harmonydata.org')}
+\item{harmony_url}{The 'Harmony' API URL to be set. (default: 'https://api.harmonydata.ac.uk')}
 }
 \value{
 No return value, called for side effects.
 }
 \description{
 This function sets the 'Harmony' API URL to be used in the package. By default,
-it uses the production 'Harmony' API ('https://api.harmonydata.org'), but you can
+it uses the production 'Harmony' API ('https://api.harmonydata.ac.uk'), but you can
 override it by providing a different URL.
 }
 \details{
@@ -25,7 +25,7 @@ used in all the relevant functions within the package.
 \examples{
 \donttest{
 set_url('https://staging.harmonydata.org')
-set_url() # Will set the URL back to the default 'https://api.harmonydata.org'
+set_url() # Will set the URL back to the default 'https://api.harmonydata.ac.uk'
 }
 
 }
