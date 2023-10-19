@@ -13,28 +13,40 @@ You can install the development version of harmonydata from
 ``` r
 #install.packages("devtools") # If you don't have devtools installed already.
 library(devtools)
+#> Warning: package 'devtools' was built under R version 4.3.1
 #> Loading required package: usethis
+#> Warning: package 'usethis' was built under R version 4.3.1
 devtools::install_github("harmonydata/harmony_r")
 #> Downloading GitHub repo harmonydata/harmony_r@HEAD
+#> curl (5.0.1 -> 5.1.0) [CRAN]
+#> uuid (1.1-0 -> 1.1-1) [CRAN]
+#> Installing 2 packages: curl, uuid
+#> Installing packages into 'C:/Users/User/AppData/Local/Temp/RtmpSayLpV/temp_libpath46f410292a6f'
+#> (as 'lib' is unspecified)
+#> package 'curl' successfully unpacked and MD5 sums checked
+#> package 'uuid' successfully unpacked and MD5 sums checked
 #> 
+#> The downloaded binary packages are in
+#>  C:\Users\User\AppData\Local\Temp\RtmpkzkT0V\downloaded_packages
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>          checking for file 'C:\Users\omtar\AppData\Local\Temp\RtmpgjLABs\remotes4c685b806daa\harmonydata-harmony_r-d617b0e/DESCRIPTION' ...     checking for file 'C:\Users\omtar\AppData\Local\Temp\RtmpgjLABs\remotes4c685b806daa\harmonydata-harmony_r-d617b0e/DESCRIPTION' ...   ✔  checking for file 'C:\Users\omtar\AppData\Local\Temp\RtmpgjLABs\remotes4c685b806daa\harmonydata-harmony_r-d617b0e/DESCRIPTION' (606ms)
-#>       ─  preparing 'harmonydata': (337ms)
+#>          checking for file 'C:\Users\User\AppData\Local\Temp\RtmpkzkT0V\remotes1ef815ca2c82\harmonydata-harmony_r-1f18f78/DESCRIPTION' ...  ✔  checking for file 'C:\Users\User\AppData\Local\Temp\RtmpkzkT0V\remotes1ef815ca2c82\harmonydata-harmony_r-1f18f78/DESCRIPTION'
+#>       ─  preparing 'harmonydata':
 #>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✔  checking DESCRIPTION meta-information
 #>       ─  checking for LF line-endings in source and make files and shell scripts
 #>   ─  checking for empty or unneeded directories
 #>      Omitted 'LazyData' from DESCRIPTION
-#>       ─  building 'harmonydata_0.1.0.tar.gz'
+#>       ─  building 'harmonydata_0.1.1.tar.gz'
 #>      
 #> 
-#> Installing package into 'C:/Users/omtar/AppData/Local/Temp/RtmpCQdPm9/temp_libpath29ac5ffb2beb'
+#> Installing package into 'C:/Users/User/AppData/Local/Temp/RtmpSayLpV/temp_libpath46f410292a6f'
 #> (as 'lib' is unspecified)
 ```
 
 ## Setting up domain
 
 Before starting, you can set up the domain for harmony. Using this
-function. By default it uses <https://api.harmonydata.org>
+function. By default it uses <a href="https://api.harmonydata.ac.uk"
+class="uri">https://api.harmonydata.</a>
 
 ``` r
 harmonydata::set_url()
@@ -138,7 +150,7 @@ match$matches
 #> [1] 0.7629658
 #> 
 #> [[2]][[4]]
-#> [1] 0.4594004
+#> [1] 0.4594003
 #> 
 #> [[2]][[5]]
 #> [1] 0.4558097
@@ -182,7 +194,7 @@ match$matches
 #> [1] 1
 #> 
 #> [[3]][[4]]
-#> [1] 0.3895614
+#> [1] 0.3895613
 #> 
 #> [[3]][[5]]
 #> [1] 0.3963558
@@ -220,10 +232,10 @@ match$matches
 #> [1] 0.4357673
 #> 
 #> [[4]][[2]]
-#> [1] 0.4594004
+#> [1] 0.4594003
 #> 
 #> [[4]][[3]]
-#> [1] 0.3895614
+#> [1] 0.3895613
 #> 
 #> [[4]][[4]]
 #> [1] 1
@@ -244,7 +256,7 @@ match$matches
 #> [1] 0.4527453
 #> 
 #> [[4]][[10]]
-#> [1] 0.4667662
+#> [1] 0.4667661
 #> 
 #> [[4]][[11]]
 #> [1] 0.4177579
@@ -490,7 +502,7 @@ match$matches
 #> [1] 0.7662809
 #> 
 #> [[10]][[4]]
-#> [1] 0.4667662
+#> [1] 0.4667661
 #> 
 #> [[10]][[5]]
 #> [1] 0.4473514

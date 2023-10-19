@@ -21,16 +21,16 @@ knitr::opts_chunk$set(
 
 You can install the development version of harmonydata from [GitHub](https://github.com/harmonydata/harmony_r) with:
 
-
-
 ```{r}
 #install.packages("devtools") # If you don't have devtools installed already.
 library(devtools)
 devtools::install_github("harmonydata/harmony_r")
 ```
+
 ## Setting up domain
 
-Before starting, you can set up the domain for harmony. Using this function. By default it uses https://api.harmonydata.org
+Before starting, you can set up the domain for harmony. Using this function. By default it uses [https://api.harmonydata.](https://api.harmonydata.ac.uk){.uri}
+
 ```{r}
 harmonydata::set_url()
 ```
@@ -56,6 +56,7 @@ names(instrument_2[[1]])
 ## Matching instruments
 
 You can get a list containing the results of the match.Here we can see a list of similarity score for each question comapred to all the other questions in th other questionaire.
+
 ```{r}
 instruments = append(instrument, instrument_2)
 match = match_instruments(instruments)
@@ -63,23 +64,30 @@ names(match)
 ```
 
 Here is how the matches look like.
+
 ```{r}
 
 match$matches
 ```
 
 # Running harmonydata locally from a docker image
+
 To run harmonydata locally, first you need to pull the docker image using the terminal.
 
 ## 1. Pull docker image
-```shell
+
+``` shell
 docker pull harmonydata/harmonywithtika
 ```
+
 ## 2. Run docker image
-```shell
+
+``` shell
 docker run -p 8080:80 harmonyapi
 ```
+
 ## 3. Configure harmonydata to run locally
+
 Set url to use localhost. Don't forget to expose port 8080:
 
 ```{r}
