@@ -13,9 +13,19 @@ knitr::opts_chunk$set(
 )
 ```
 
-# harmonydata
+# Harmony R library: harmonydata
 
 ## Getting started with the Harmony R library
+
+* Check out [this video walkthrough](https://www.youtube.com/watch?v=hFqg6T_BqZc&t=1s) installing and running R on Windows 10.
+
+* You can run the walkthrough Python notebook in [Google Colab](https://colab.research.google.com/github/harmonydata/harmony/blob/main/Harmony_example_walkthrough.ipynb) with a single click: <a href="https://colab.research.google.com/github/harmonydata/harmony/blob/main/Harmony_example_walkthrough.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+* You can also download an R markdown notebook to run in R Studio: <a href="https://harmonydata.ac.uk/harmony_r_example.nb.html" target="_parent"><img src="https://img.shields.io/badge/RStudio-4285F4" alt="Open In R Studio"/></a>
+
+* You can run the walkthrough R notebook in Google Colab with a single click: <a href="https://colab.research.google.com/github/harmonydata/experiments/blob/main/Harmony_R_example.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> [View the PDF documentation of the R package on CRAN](https://cran.r-project.org/web/packages/harmonydata/harmonydata.pdf)
+
+
 
 ### Installing R library
 
@@ -29,10 +39,24 @@ devtools::install_github("harmonydata/harmony_r")
 
 ## Setting up domain
 
-Before starting, you can set up the domain for harmony. Using this function. By default it uses [https://api.harmonydata.ac.uk](https://api.harmonydata.ac.uk){.uri}
+Before starting, you can set up the remote API endpoint for harmony using this function. By default it uses the remote Harmony API [https://api.harmonydata.ac.uk](https://api.harmonydata.ac.uk){.uri}
+
+
 
 ```{r}
 harmonydata::set_url()
+```
+
+For example, if you want to use Harmony locally, you can run the [Harmony API as a Docker container](https://github.com/harmonydata/harmonyapi). By default it runs on localhost at port 8000. In this case you can run this command to run it locally:
+
+```{bash}
+docker run -p 8000:8000 harmonydata/harmonylocal
+```
+
+Now in R you can set the R library to point to your local Harmony on Docker.
+
+```{r}
+harmonydata::set_url("http://localhost:8000")
 ```
 
 ## Parsing a raw file into an Instrument
@@ -93,3 +117,29 @@ Set url to use localhost. Don't forget to expose port 8000:
 ```{r}
 set_url(harmony_url = "http://localhost:8000")
 ```
+
+
+## 📜 How do I cite Harmony?
+
+You can cite our validation paper:
+
+ McElroy, Wood, Bond, Mulvenna, Shevlin, Ploubidis, Scopel Hoffmann, Moltrecht, [Using natural language processing to facilitate the harmonisation of mental health questionnaires: a validation study using real-world data](https://bmcpsychiatry.biomedcentral.com/articles/10.1186/s12888-024-05954-2#citeas). BMC Psychiatry 24, 530 (2024), https://doi.org/10.1186/s12888-024-05954-2
+ 
+
+A BibTeX entry for LaTeX users is
+
+{{< rawhtml >}}
+<pre>
+@article{mcelroy2024using,
+  title={Using natural language processing to facilitate the harmonisation of mental health questionnaires: a validation study using real-world data},
+  author={McElroy, Eoin and Wood, Thomas and Bond, Raymond and Mulvenna, Maurice and Shevlin, Mark and Ploubidis, George B and Hoffmann, Mauricio Scopel and Moltrecht, Bettina},
+  journal={BMC psychiatry},
+  volume={24},
+  number={1},
+  pages={530},
+  year={2024},
+  publisher={Springer}
+}
+</pre>
+{{< /rawhtml >}}
+
