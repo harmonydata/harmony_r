@@ -77,19 +77,19 @@ To run harmonydata locally, first you need to pull the docker image using the te
 ## 1. Pull docker image
 
 ``` shell
-docker pull harmonydata/harmonywithtika
+docker pull harmonydata/harmonyapi
 ```
 
 ## 2. Run docker image
 
 ``` shell
-docker run -p 8080:80 harmonyapi
+docker run -p 8000:80 harmonyapi
 ```
 
 ## 3. Configure harmonydata to run locally
 
-Set url to use localhost. Don't forget to expose port 8080:
+Set url to use localhost. Don't forget to expose port 8000:
 
 ```{r}
-set_url(harmony_url = "http://localhost:8080")
+set_url(harmony_url = "http://localhost:8000")
 ```
