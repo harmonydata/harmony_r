@@ -21,7 +21,6 @@
 # SOFTWARE.
 
 library(testthat)
-library(harmonydata)
 
 # create GAD-7 instrument
 gad_instrument = list(
