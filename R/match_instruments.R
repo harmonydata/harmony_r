@@ -87,7 +87,8 @@ match_instruments <- function(instruments){
     instruments[["instruments"]][[i]][["metadata"]] = NULL
     #now clean the questions
     for (j in 1:length(instruments[["instruments"]][[i]][["questions"]])){
-      instruments[["instruments"]][[i]][["questions"]][[j]][["instrument_id"]] = NULL
+      # this line was causing issues so i commented it out:
+      # instruments[["instruments"]][[i]][["questions"]][[j]][["instrument_id"]] = NULL
       instruments[["instruments"]][[i]][["questions"]][[j]][["instrument_name"]] = NULL
       instruments[["instruments"]][[i]][["questions"]][[j]][["topics_auto"]] = NULL
       instruments[["instruments"]][[i]][["questions"]][[j]][["nearest_match_from_mhc_auto"]] = NULL

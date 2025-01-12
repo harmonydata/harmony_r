@@ -27,6 +27,7 @@
 #'
 #' @param match A matched instruments object.
 #' @param threshold A similarity threshold.
+#' @param within_instrument_matches A boolean indicating whether to include matches within the same instrument.
 #' @return A list of all questions with similarity greather than the threshold.'.
 #'
 #' @examples
@@ -72,7 +73,9 @@
 #' @export
 #' @author Alex Nikic
 
-generate_crosswalk_table = function(match, threshold) {
+library(assertthat)
+
+generate_crosswalk_table = function(match, threshold, within_instrument_matches=TRUE) {
     # match$questions are the questions
     # match$matches is the similarity matrix
 
@@ -90,6 +93,17 @@ generate_crosswalk_table = function(match, threshold) {
         for (j in seq_along(match$questions)) {
             # check for non-dupe and similarity above threshold # nolint
             if (j > i & match$matches[[i]][[j]] > threshold) {
+
+                # if within_instrument_matches is FALSE, skip if the questions are from the same instrument
+                if (!within_instrument_matches) {
+                    # ensure instrument_ids are not NULL
+                    assert_that(!is.null(match$questions[[i]]$instrument_id))
+                    assert_that(!is.null(match$questions[[j]]$instrument_id))
+
+                    if(match$questions[[i]]$instrument_id == match$questions[[j]]$instrument_id) {
+                        next
+                    }
+                }
 
                 # append to dataframe
                 matching_pairs = rbind(matching_pairs, data.frame(

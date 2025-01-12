@@ -23,27 +23,61 @@
 library(testthat)
 
 # create GAD-7 instrument
-gad_instrument = list(
+instrument_gad = create_instrument_from_list(
     instrument_name = "GAD-7",
-    questions = list(
-        list(question_no = "GAD-7_1", question_text="Feeling nervous, anxious, or on edge"),
-        list(question_no = "GAD-7_2", question_text="Not being able to stop or control worrying"),
-        list(question_no = "GAD-7_3", question_text="Worrying too much about different things"),
-        list(question_no = "GAD-7_4", question_text="Trouble relaxing"),
-        list(question_no = "GAD-7_5", question_text="Being so restless that it is hard to sit still"),
-        list(question_no = "GAD-7_6", question_text="Becoming easily annoyed or irritable"),
-        list(question_no = "GAD-7_7", question_text="Feeling afraid, as if something awful might happen")
+    question_texts = c(
+        "Feeling nervous, anxious, or on edge",
+        "Not being able to stop or control worrying",
+        "Worrying too much about different things",
+        "Trouble relaxing",
+        "Being so restless that it is hard to sit still",
+        "Becoming easily annoyed or irritable",
+        "Feeling afraid, as if something awful might happen"
+    ),
+    question_numbers = c("GAD-7_1", "GAD-7_2", "GAD-7_3", "GAD-7_4", "GAD-7_5", "GAD-7_6", "GAD-7_7")
+)
+
+# create CES-D instrument
+instrument_cesd = create_instrument_from_list(
+    instrument_name = "CES-D",
+    question_texts = c(
+        "I was bothered by things that usually don't bother me.",
+        "I did not feel like eating; my appetite was poor.",
+        "I felt that I could not shake off the blues even with help from my family or friends.",
+        "I felt that I was just as good as other people.",
+        "I had trouble keeping my mind on what I was doing.",
+        "I felt depressed.",
+        "I felt that everything I did was an effort.",
+        "I felt hopeful about the future.",
+        "I thought my life had been a failure.",
+        "I felt fearful.",
+        "My sleep was restless.",
+        "I was happy.",
+        "I talked less than usual.",
+        "I felt lonely.",
+        "People were unfriendly.",
+        "I enjoyed life.",
+        "I had crying spells.",
+        "I felt sad.",
+        "I felt that people disliked me.",
+        "I could not get “going.”"
+    ),
+    question_numbers = c(
+        "CES-D_1", "CES-D_2", "CES-D_3", "CES-D_4", "CES-D_5", "CES-D_6", "CES-D_7", "CES-D_8", "CES-D_9", "CES-D_10",
+        "CES-D_11", "CES-D_12", "CES-D_13", "CES-D_14", "CES-D_15", "CES-D_16", "CES-D_17", "CES-D_18", "CES-D_19", "CES-D_20"
     )
 )
 
-match = match_instruments(list(gad_instrument))
-crosswalk_table = generate_crosswalk_table(match, 0.7)
+
+# test the function for one instrument
+match_gad = match_instruments(list(instrument_gad))
+crosswalk_table_gad = generate_crosswalk_table(match_gad, 0.7)
 
 # round match scores for testing
-crosswalk_table$match_score = round(crosswalk_table$match_score, 2)
+crosswalk_table_gad$match_score = round(crosswalk_table_gad$match_score, 2)
 
 # crosswalk table from web version
-expected_crosswalk_table = data.frame(
+expected_crosswalk_table_gad = data.frame(
             pair_name = c("1_7", "2_3"),
             question1_no = c("GAD-7_1", "GAD-7_2"),
             question1_text = c("Feeling nervous, anxious, or on edge", "Not being able to stop or control worrying"),
@@ -53,4 +87,22 @@ expected_crosswalk_table = data.frame(
         )
 
 # test if the output is the same as the web version
-expect_equal(crosswalk_table, expected_crosswalk_table)
+expect_equal(crosswalk_table_gad, expected_crosswalk_table_gad)
+
+
+# now test the within_instrument_matches toggle
+match_both = match_instruments(list(instrument_gad, instrument_cesd))
+crosswalk_table_both = generate_crosswalk_table(match_both, 0.7, within_instrument_matches = FALSE)
+crosswalk_table_both$match_score = round(crosswalk_table_both$match_score, 2)
+
+# crosswalk table from web version
+expected_crosswalk_table_both = data.frame(
+            pair_name = c("7_17"),
+            question1_no = c("GAD-7_7"),
+            question1_text = c("Feeling afraid, as if something awful might happen"),
+            question2_no = c("CES-D_10"),
+            question2_text = c("I felt fearful."),
+            match_score = c(0.78)
+        )
+
+expect_equal(crosswalk_table_both, expected_crosswalk_table_both)
