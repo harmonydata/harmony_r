@@ -71,6 +71,9 @@
 #'
 #' @export
 #' @author Ulster University [cph]
+
+library(httr)
+
 match_instruments <- function(instruments){
 #most of the work is simply creating the body
   #steps to create the body
@@ -79,8 +82,13 @@ match_instruments <- function(instruments){
     `accept` = "application/json",
     `Content-Type` = "application/json"
   )
-  instruments = list(instruments)
-  names(instruments) = "instruments"
+
+  if (! is.null(names(instruments))) { # the case where only one instrument is passed but not enclosed as a list
+    instruments = list("instruments" = list(instruments))
+  } else { # the case where a list is passed
+    instruments = list("instruments" = instruments)
+  }
+  
   for (i in 1:length(instruments[["instruments"]])){
     instruments[["instruments"]][[i]][["study"]] = NULL
     instruments[["instruments"]][[i]][["sweep"]] = NULL
