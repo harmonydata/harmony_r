@@ -25,7 +25,7 @@ library(testthat)
 # create GAD-7 instrument
 instrument_gad = create_instrument_from_list(
     instrument_name = "GAD-7",
-    question_texts = c(
+    question_texts = list(
         "Feeling nervous, anxious, or on edge",
         "Not being able to stop or control worrying",
         "Worrying too much about different things",
@@ -34,13 +34,13 @@ instrument_gad = create_instrument_from_list(
         "Becoming easily annoyed or irritable",
         "Feeling afraid, as if something awful might happen"
     ),
-    question_numbers = c("GAD-7_1", "GAD-7_2", "GAD-7_3", "GAD-7_4", "GAD-7_5", "GAD-7_6", "GAD-7_7")
+    question_numbers = list("GAD-7_1", "GAD-7_2", "GAD-7_3", "GAD-7_4", "GAD-7_5", "GAD-7_6", "GAD-7_7")
 )
 
 # create CES-D instrument
 instrument_cesd = create_instrument_from_list(
     instrument_name = "CES-D",
-    question_texts = c(
+    question_texts = list(
         "I was bothered by things that usually don't bother me.",
         "I did not feel like eating; my appetite was poor.",
         "I felt that I could not shake off the blues even with help from my family or friends.",
@@ -62,7 +62,7 @@ instrument_cesd = create_instrument_from_list(
         "I felt that people disliked me.",
         "I could not get “going.”"
     ),
-    question_numbers = c(
+    question_numbers = list(
         "CES-D_1", "CES-D_2", "CES-D_3", "CES-D_4", "CES-D_5", "CES-D_6", "CES-D_7", "CES-D_8", "CES-D_9", "CES-D_10",
         "CES-D_11", "CES-D_12", "CES-D_13", "CES-D_14", "CES-D_15", "CES-D_16", "CES-D_17", "CES-D_18", "CES-D_19", "CES-D_20"
     )

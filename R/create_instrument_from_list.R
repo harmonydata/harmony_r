@@ -53,8 +53,8 @@ create_instrument_from_list = function(question_texts, question_numbers = NULL, 
     # add in questions
     for (i in seq_along(question_texts)) {
         question = list(
-            question_text = question_texts[i],
-            question_no = ifelse(is.null(question_numbers[i]), paste(i), question_numbers[i]),
+            question_text = question_texts[[i]],
+            question_no = ifelse(is.null(question_numbers[[i]]), paste(i), question_numbers[[i]]),
             instrument_id = data$instrument_id,
             instrument_name = data$instrument_name
         )

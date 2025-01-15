@@ -26,6 +26,7 @@
 #' and matches the instruments using the 'Harmony Data API'. It returns the matched instruments.
 #'
 #' @param instruments A list of instruments to be matched.
+#' @param is_negate A boolean value to toggle question negation. Default is TRUE.
 #' @return A list of matched instruments returned from the 'Harmony Data API'.
 #'
 #' @examples
@@ -74,7 +75,7 @@
 
 library(httr)
 
-match_instruments <- function(instruments){
+match_instruments <- function(instruments, is_negate=TRUE){
 #most of the work is simply creating the body
   #steps to create the body
   #take a list of instruments and convert it to a format that is acceptable by the databse
@@ -106,7 +107,7 @@ match_instruments <- function(instruments){
 
   #from questions u need to delete anything after source page
   bod = jsonlite::toJSON(instruments, pretty=TRUE,auto_unbox=TRUE)
-  res <- httr::POST(url = paste0(pkg.globals$url,'/text/match'), httr::add_headers(.headers=headers), body = bod, encode = "json")
+  res <- httr::POST(url = paste0(pkg.globals$url,'/text/match?is_negate=',is_negate), httr::add_headers(.headers=headers), body = bod, encode = "json")
   #contents
   conten = content(res)
   return(conten)
