@@ -17,5 +17,7 @@ Imports:
   base64enc,
   jsonlite,
   utils, 
-  tools
+  tools,
+  assertthat, 
+  purrr
 RoxygenNote: 7.2.3

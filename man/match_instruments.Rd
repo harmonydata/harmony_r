@@ -4,10 +4,12 @@
 \alias{match_instruments}
 \title{Match Instruments Function}
 \usage{
-match_instruments(instruments)
+match_instruments(instruments, is_negate = TRUE)
 }
 \arguments{
 \item{instruments}{A list of instruments to be matched.}
+
+\item{is_negate}{A boolean value to toggle question negation. Default is TRUE.}
 }
 \value{
 A list of matched instruments returned from the 'Harmony Data API'.
@@ -18,37 +20,21 @@ and matches the instruments using the 'Harmony Data API'. It returns the matched
 }
 \examples{
 \donttest{
-instruments_list <- list(
-  list(
-    instrument_id = "id1",
-    instrument_name = "Instrument A",
-    questions = list(
-      list(
-        question_text = "How old are you?",
-        topics = c("Age", "Demographics"),
-        source_page = "https://example.com/instrumentA"
-      ),
-      list(
-        question_text = "What is your gender?",
-        topics = c("Gender", "Demographics"),
-        source_page = "https://example.com/instrumentA"
-      )
-    )
-  ),
-  list(
-    instrument_id = "id2",
-    instrument_name = "Instrument B",
-    questions = list(
-      list(
-        question_text = "Do you smoke?",
-        topics = c("Smoking", "Health"),
-        source_page = "https://example.com/instrumentB"
-      )
-    )
-  )
-)
-matched_instruments <- match_instruments(instruments_list)
 
+
+
+instrument_A <- create_instrument_from_list(list(
+  "How old are you?",
+  "What is your gender?"
+))
+
+instrument_B <- create_instrument_from_list(list(
+  "Do you smoke?"
+))
+
+instruments <- list(instrument_A, instrument_B)
+
+matched_instruments <- match_instruments(instruments)
 }
 
 }

@@ -31,37 +31,21 @@
 #'
 #' @examples
 #' \donttest{
-#' instruments_list <- list(
-#'   list(
-#'     instrument_id = "id1",
-#'     instrument_name = "Instrument A",
-#'     questions = list(
-#'       list(
-#'         question_text = "How old are you?",
-#'         topics = c("Age", "Demographics"),
-#'         source_page = "https://example.com/instrumentA"
-#'       ),
-#'       list(
-#'         question_text = "What is your gender?",
-#'         topics = c("Gender", "Demographics"),
-#'         source_page = "https://example.com/instrumentA"
-#'       )
-#'     )
-#'   ),
-#'   list(
-#'     instrument_id = "id2",
-#'     instrument_name = "Instrument B",
-#'     questions = list(
-#'       list(
-#'         question_text = "Do you smoke?",
-#'         topics = c("Smoking", "Health"),
-#'         source_page = "https://example.com/instrumentB"
-#'       )
-#'     )
-#'   )
-#' )
-#' matched_instruments <- match_instruments(instruments_list)
 #'
+#'
+#'
+#' instrument_A <- create_instrument_from_list(list(
+#'   "How old are you?",
+#'   "What is your gender?"
+#' ))
+#'
+#' instrument_B <- create_instrument_from_list(list(
+#'   "Do you smoke?"
+#' ))
+#'
+#' instruments <- list(instrument_A, instrument_B)
+#'
+#' matched_instruments <- match_instruments(instruments)
 #' }
 #'
 #' @import jsonlite
@@ -73,7 +57,6 @@
 #' @export
 #' @author Ulster University [cph]
 
-library(httr)
 
 match_instruments <- function(instruments, is_negate=TRUE){
 #most of the work is simply creating the body
@@ -89,7 +72,7 @@ match_instruments <- function(instruments, is_negate=TRUE){
   } else { # the case where a list is passed
     instruments = list("instruments" = instruments)
   }
-  
+
   for (i in 1:length(instruments[["instruments"]])){
     instruments[["instruments"]][[i]][["study"]] = NULL
     instruments[["instruments"]][[i]][["sweep"]] = NULL

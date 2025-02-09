@@ -9,3 +9,5 @@
 ^harmony_r_example\.Rmd$
 ^harmony_r_example\.nb\.html$
 ^CITATION\.cff$
+^\.lintr$
+^\.github$

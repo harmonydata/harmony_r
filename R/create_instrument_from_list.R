@@ -20,18 +20,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-' Generate Crosswalk Table Function
+' Create instrument from list
 #'
 #' This function creates an instrument from a list of questions.
 #'
 #' @param question_texts A character vector of question texts.
 #' @param question_numbers A character vector of question numbers. If not provided, the question number will be the index of the question text.
 #' @param instrument_name A character string of the instrument name.
-#' @param file_name A character string of the file name.
 #'
 #' @examples
 #' \donttest{
-#' instrument = create_instrument_from_list(c("How old are you?", "What is your gender?", "What is your name?"))
+#' instrument = create_instrument_from_list(
+#'   list("How old are you?",
+#'     "What is your gender?",
+#'     "What is your name?")
+#' )
 #' }
 #'
 #'
@@ -41,8 +44,8 @@
 #' @export
 #' @author Alex Nikic
 
-create_instrument_from_list = function(question_texts, question_numbers = NULL, instrument_name = "My instrument", file_name = "My file") {
-
+create_instrument_from_list = function(question_texts, question_numbers = NULL, instrument_name = "My instrument") {
+file_name = "random file"
     data = list(
         file_id = paste(uuid::UUIDgenerate(output = "raw"), collapse = ""),
         instrument_id = paste(uuid::UUIDgenerate(output = "raw"), collapse = ""),
