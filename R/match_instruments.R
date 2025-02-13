@@ -93,6 +93,14 @@ match_instruments <- function(instruments, is_negate=TRUE){
   res <- httr::POST(url = paste0(pkg.globals$url,'/text/match?is_negate=',is_negate), httr::add_headers(.headers=headers), body = bod, encode = "json")
   #contents
   conten = content(res)
+
+  # for the clusters, we need to add 1 to the item_ids since R indexes from 1 (whereas python indexes from 0)
+  for (i in seq_along(conten$clusters)) {
+    for (j in seq_along(conten$clusters[[i]]$item_ids)) {
+      conten$clusters[[i]]$item_ids[[j]] = conten$clusters[[i]]$item_ids[[j]] + 1
+    }
+  }
+
   return(conten)
 }
 
