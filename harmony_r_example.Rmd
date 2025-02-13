@@ -56,12 +56,12 @@ match = match_instruments(instruments_list)
 Check what has come out of the match:
 
 ```{r}
-names(match_response)
+names(match)
 ```
 The first question is CES_D English question 1.
 
 ```{r}
-match_response$questions[[1]]
+match$questions[[1]]
 ```
 
 
