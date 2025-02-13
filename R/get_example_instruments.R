@@ -57,5 +57,11 @@ get_example_instruments <- function() {
 
   cont <- content(res)
 
-  return(cont)
+  # assign keys to each instrument based on their instrument_name
+  output = list()
+  for (i in seq_along(cont)) {
+    output[[cont[[i]]$instrument_name]] = cont[[i]]
+  }
+
+  return(output)
 }

@@ -99,6 +99,9 @@ match_instruments <- function(instruments, is_negate=TRUE){
     for (j in seq_along(conten$clusters[[i]]$item_ids)) {
       conten$clusters[[i]]$item_ids[[j]] = conten$clusters[[i]]$item_ids[[j]] + 1
     }
+
+    # we also add 1 to each cluster_id
+    conten$clusters[[i]]$cluster_id = conten$clusters[[i]]$cluster_id + 1
   }
 
   return(conten)

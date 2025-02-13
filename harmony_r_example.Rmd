@@ -26,11 +26,17 @@ Now we can create our instruments.
 If you had everything in a PDF or Excel file, you could load the instruments directly from the file: `instrument = load_instruments_from_file(path = "CBCL_GOASSESS.xlsx")`.
 In this example we will load two questionnaires from Harmony's database and manually input a third questionnaire.
 
+First we load the instruments from Harmony's database:
+
 ```{r}
 example_instruments = get_example_instruments()
+names(example_instruments)
+```
 
-ces_d_english = Filter(function(x) x$instrument_name == "CES_D English", example_instruments)[[1]]
-gad_7_portuguese = Filter(function(x) x$instrument_name == "GAD-7 Portuguese", example_instruments)[[1]]
+Let's use the CES-D English, GAD-7 Portuguese and create a GAD-7 Norwegian instrument.
+```{r}
+ces_d_english = example_instruments[["CES_D English"]]
+gad_7_portuguese = example_instruments[["GAD-7 Portuguese"]]
 
 gad_7_norwegian = create_instrument_from_list(
     list(
@@ -72,13 +78,20 @@ length(match$questions)
 ```
 
 
-The first three entries in the match array are:
+The first three entries in the similarity matrix are:
 
 ```{r}
 match$matches[[1]][c(1,2,3)]
 ```
 
+We can plot a heatmap of the similarity matrix:
+```{r}
+heatmap(match$matches)
+```
+
 ## Generate a crosswalk table
+
+We can generate a crosswalk table to match questions with a cosine similarity above a certain threshold.
 
 ```{r}
 threshold = 0.7
@@ -96,6 +109,8 @@ df_crosswalk_table
 
 ## Cluster the questions
 
+Display the clusters that come out of Harmony by default.
+
 ```{r}
 for (i in seq_along(match$clusters)) {
     print(paste("Cluster", match$clusters[[i]]$cluster_id, match$clusters[[i]]$text_description))
@@ -108,6 +123,8 @@ for (i in seq_along(match$clusters)) {
 ```
 
 ## Display the similarities between instruments
+
+Let's display the similarities between the instruments.
 
 ```{r}
 for (i in seq_along(match$instrument_to_instrument_similarities)) {
