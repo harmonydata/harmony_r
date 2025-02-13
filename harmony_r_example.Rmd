@@ -84,11 +84,6 @@ The first three entries in the similarity matrix are:
 match$matches[[1]][c(1,2,3)]
 ```
 
-We can plot a heatmap of the similarity matrix:
-```{r}
-heatmap(match$matches)
-```
-
 ## Generate a crosswalk table
 
 We can generate a crosswalk table to match questions with a cosine similarity above a certain threshold.
