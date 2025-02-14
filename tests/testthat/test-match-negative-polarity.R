@@ -27,20 +27,23 @@ instrument_en <- create_instrument_from_list(question_texts = questions_en)
 # test single instrument with negation on as default
 match <- match_instruments(instrument_en)
 
-expect_equal(2, length(match$instruments[[1]]$questions))
-expect_equal(2, length(match$matches))
-expect_lt(0.99, match$matches[[1]][[1]])
-expect_gt(0, match$matches[[1]][[2]])
-expect_lt(0.99, match$matches[[2]][[2]])
-expect_gt(0, match$matches[[2]][[1]])
-
+test_that("Single instrument with negation on as default", {
+    expect_equal(2, length(match$instruments[[1]]$questions))
+    expect_equal(2, length(match$matches))
+    expect_lt(0.99, match$matches[[1]][[1]])
+    expect_gt(0, match$matches[[1]][[2]])
+    expect_lt(0.99, match$matches[[2]][[2]])
+    expect_gt(0, match$matches[[2]][[1]])
+})
 
 # test single instrument without negation
 match <- match_instruments(instrument_en, is_negate = FALSE)
 
-expect_equal(2, length(match$instruments[[1]]$questions))
-expect_equal(2, length(match$matches))
-expect_lt(0.99, match$matches[[1]][[1]])
-expect_lt(0, match$matches[[1]][[2]])
-expect_lt(0.99, match$matches[[2]][[2]])
-expect_lt(0, match$matches[[2]][[1]])
+test_that("Single instrument without negation", {
+    expect_equal(2, length(match$instruments[[1]]$questions))
+    expect_equal(2, length(match$matches))
+    expect_lt(0.99, match$matches[[1]][[1]])
+    expect_lt(0, match$matches[[1]][[2]])
+    expect_lt(0.99, match$matches[[2]][[2]])
+    expect_lt(0, match$matches[[2]][[1]])
+})

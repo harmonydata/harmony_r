@@ -93,7 +93,9 @@ expected_crosswalk_table_gad <- data.frame(
 )
 
 # test if the output is the same as the web version
-expect_equal(crosswalk_table_gad, expected_crosswalk_table_gad)
+test_that("Generate crosswalk works for one instrument", {
+    expect_equal(crosswalk_table_gad, expected_crosswalk_table_gad)
+})
 
 
 # now test the within_instrument_matches toggle
@@ -118,4 +120,6 @@ expected_crosswalk_table_both <- data.frame(
     match_score = 0.78
 )
 
-expect_equal(crosswalk_table_both, expected_crosswalk_table_both)
+test_that("Generate crosswalk works for two instruments", {
+    expect_equal(crosswalk_table_both, expected_crosswalk_table_both)
+})
