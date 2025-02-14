@@ -58,52 +58,50 @@
 #' @author Ulster University [cph]
 
 
-match_instruments <- function(instruments, is_negate=TRUE){
-#most of the work is simply creating the body
-  #steps to create the body
-  #take a list of instruments and convert it to a format that is acceptable by the databse
-  headers = c(
-    `accept` = "application/json",
-    `Content-Type` = "application/json"
-  )
+match_instruments <- function(instruments, is_negate = TRUE) {
+    #most of the work is simply creating the body
+    #steps to create the body
+    #take a list of instruments and convert it to a format that is acceptable by the databse
+    headers <- c(
+        `accept` = "application/json",
+        `Content-Type` = "application/json"
+    )
 
-  if (! is.null(names(instruments))) { # the case where only one instrument is passed but not enclosed as a list
-    instruments = list("instruments" = list(instruments))
-  } else { # the case where a list is passed
-    instruments = list("instruments" = instruments)
-  }
-
-  for (i in 1:length(instruments[["instruments"]])){
-    instruments[["instruments"]][[i]][["study"]] = NULL
-    instruments[["instruments"]][[i]][["sweep"]] = NULL
-    instruments[["instruments"]][[i]][["metadata"]] = NULL
-    #now clean the questions
-    for (j in 1:length(instruments[["instruments"]][[i]][["questions"]])){
-      # this line was causing issues so i commented it out:
-      # instruments[["instruments"]][[i]][["questions"]][[j]][["instrument_id"]] = NULL
-      instruments[["instruments"]][[i]][["questions"]][[j]][["instrument_name"]] = NULL
-      instruments[["instruments"]][[i]][["questions"]][[j]][["topics_auto"]] = NULL
-      instruments[["instruments"]][[i]][["questions"]][[j]][["nearest_match_from_mhc_auto"]] = NULL
-    }
-  }
-
-
-  #from questions u need to delete anything after source page
-  bod = jsonlite::toJSON(instruments, pretty=TRUE,auto_unbox=TRUE)
-  res <- httr::POST(url = paste0(pkg.globals$url,'/text/match?is_negate=',is_negate), httr::add_headers(.headers=headers), body = bod, encode = "json")
-  #contents
-  conten = content(res)
-
-  # for the clusters, we need to add 1 to the item_ids since R indexes from 1 (whereas python indexes from 0)
-  for (i in seq_along(conten$clusters)) {
-    for (j in seq_along(conten$clusters[[i]]$item_ids)) {
-      conten$clusters[[i]]$item_ids[[j]] = conten$clusters[[i]]$item_ids[[j]] + 1
+    if (! is.null(names(instruments))) { # the case where only one instrument is passed but not enclosed as a list
+        instruments <- list("instruments" = list(instruments))
+    } else { # the case where a list is passed
+        instruments <- list("instruments" = instruments)
     }
 
-    # we also add 1 to each cluster_id
-    conten$clusters[[i]]$cluster_id = conten$clusters[[i]]$cluster_id + 1
-  }
+    for (i in seq_along(instruments[["instruments"]])){
+        instruments[["instruments"]][[i]][["study"]] <- NULL
+        instruments[["instruments"]][[i]][["sweep"]] <- NULL
+        instruments[["instruments"]][[i]][["metadata"]] <- NULL
+        #now clean the questions
+        for (j in seq_along(instruments[["instruments"]][[i]][["questions"]])) {
+            instruments[["instruments"]][[i]][["questions"]][[j]][["instrument_name"]] <- NULL
+            instruments[["instruments"]][[i]][["questions"]][[j]][["topics_auto"]] <- NULL
+            instruments[["instruments"]][[i]][["questions"]][[j]][["nearest_match_from_mhc_auto"]] <- NULL
+        }
+    }
 
-  return(conten)
+
+    #from questions u need to delete anything after source page
+    bod <- jsonlite::toJSON(instruments, pretty = TRUE, auto_unbox = TRUE)
+    res <- httr::POST(url = paste0(pkg.globals$url, "/text/match?is_negate=", is_negate),
+                      httr::add_headers(.headers = headers), body = bod, encode = "json")
+    #contents
+    conten <- content(res)
+
+    # for the clusters, we need to add 1 to the item_ids since R indexes from 1 (whereas python indexes from 0)
+    for (i in seq_along(conten$clusters)) {
+        for (j in seq_along(conten$clusters[[i]]$item_ids)) {
+            conten$clusters[[i]]$item_ids[[j]] <- conten$clusters[[i]]$item_ids[[j]] + 1
+        }
+
+        # we also add 1 to each cluster_id
+        conten$clusters[[i]]$cluster_id <- conten$clusters[[i]]$cluster_id + 1
+    }
+
+    return(conten)
 }
-

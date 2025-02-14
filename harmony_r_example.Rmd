@@ -29,16 +29,16 @@ In this example we will load two questionnaires from Harmony's database and manu
 First we load the instruments from Harmony's database:
 
 ```{r}
-example_instruments = get_example_instruments()
+example_instruments <- get_example_instruments()
 names(example_instruments)
 ```
 
 Let's use the CES-D English, GAD-7 Portuguese and create a GAD-7 Norwegian instrument.
 ```{r}
-ces_d_english = example_instruments[["CES_D English"]]
-gad_7_portuguese = example_instruments[["GAD-7 Portuguese"]]
+ces_d_english <- example_instruments[["CES_D English"]]
+gad_7_portuguese <- example_instruments[["GAD-7 Portuguese"]]
 
-gad_7_norwegian = create_instrument_from_list(
+gad_7_norwegian <- create_instrument_from_list(
     list(
         "Følt deg nervøs, engstelig eller veldig stresset",
         "Ikke klart å slutte å bekymre deg eller kontrolleren bekymringene dine"
@@ -56,7 +56,7 @@ instruments_list <- list(ces_d_english, gad_7_portuguese, gad_7_norwegian)
 Let's call Harmony to calculate the match:
 
 ```{r}
-match = match_instruments(instruments_list)
+match <- match_instruments(instruments_list)
 ```
 
 Check what has come out of the match:
@@ -81,7 +81,7 @@ length(match$questions)
 The first three entries in the similarity matrix are:
 
 ```{r}
-match$matches[[1]][c(1,2,3)]
+match$matches[[1]][c(1, 2, 3)]
 ```
 
 ## Generate a crosswalk table
@@ -89,13 +89,13 @@ match$matches[[1]][c(1,2,3)]
 We can generate a crosswalk table to match questions with a cosine similarity above a certain threshold.
 
 ```{r}
-threshold = 0.7
+threshold <- 0.7
 
-df_crosswalk_table = generate_crosswalk_table(
-    match$instruments, 
-    match$matches, 
-    threshold, 
-    is_allow_within_instrument_matches = TRUE, 
+df_crosswalk_table <- generate_crosswalk_table(
+    match$instruments,
+    match$matches,
+    threshold,
+    is_allow_within_instrument_matches = TRUE,
     is_enforce_one_to_one = TRUE
 )
 
@@ -109,10 +109,10 @@ Display the clusters that come out of Harmony by default.
 ```{r}
 for (i in seq_along(match$clusters)) {
     print(paste("Cluster", match$clusters[[i]]$cluster_id, match$clusters[[i]]$text_description))
-    
+
     for (j in seq_along(match$clusters[[i]]$item_ids)) {
-            id = match$clusters[[i]]$item_ids[[j]]
-            print(paste("    ", match$questions[[id]]$question_text))
+        id <- match$clusters[[i]]$item_ids[[j]]
+        print(paste("    ", match$questions[[id]]$question_text))
     }
 }
 ```
@@ -123,7 +123,7 @@ Let's display the similarities between the instruments.
 
 ```{r}
 for (i in seq_along(match$instrument_to_instrument_similarities)) {
-    obj = match$instrument_to_instrument_similarities[[i]]
+    obj <- match$instrument_to_instrument_similarities[[i]]
     print(paste("F1 similarity of", obj$instrument_1_name, "to", obj$instrument_2_name, "is", obj$f1))
 }
 ```
@@ -134,16 +134,16 @@ Let's convert to a dataframe so we can export to CSV:
 
 ```{r}
 df <- data.frame(match$matches[[1]])
-for (x in 1:length(match$matches)) {
-    df[x, ] = match$matches[[x]]
+for (x in seq_along(match$matches)) {
+    df[x, ] <- match$matches[[x]]
 }
 ```
 
 Set the row and column names to something human readable:
 
 ```{r}
-colnames(df) <- lapply(match$questions, function(x) paste(x$question_no,  x$question_text , sep=" ") )
-rownames(df) <- lapply(match$questions, function(x) paste(x$question_no,  x$question_text , sep=" ") )
+colnames(df) <- lapply(match$questions, function(x) paste(x$question_no, x$question_text, sep = " "))
+rownames(df) <- lapply(match$questions, function(x) paste(x$question_no, x$question_text, sep = " "))
 ```
 
 Now we can save to CSV:

@@ -1,4 +1,4 @@
- # MIT License
+# MIT License
 #
 # Copyright (c) 2023 Ulster University (https://www.ulster.ac.uk)
 #
@@ -20,10 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-library(testthat)
 
 # create GAD-7 instrument
-instrument_gad = create_instrument_from_list(
+instrument_gad <- create_instrument_from_list(
     instrument_name = "GAD-7",
     question_texts = list(
         "Feeling nervous, anxious, or on edge",
@@ -38,7 +37,7 @@ instrument_gad = create_instrument_from_list(
 )
 
 # create CES-D instrument
-instrument_cesd = create_instrument_from_list(
+instrument_cesd <- create_instrument_from_list(
     instrument_name = "CES-D",
     question_texts = list(
         "I was bothered by things that usually don't bother me.",
@@ -63,46 +62,60 @@ instrument_cesd = create_instrument_from_list(
         "I could not get “going.”"
     ),
     question_numbers = list(
-        "CES-D_1", "CES-D_2", "CES-D_3", "CES-D_4", "CES-D_5", "CES-D_6", "CES-D_7", "CES-D_8", "CES-D_9", "CES-D_10",
-        "CES-D_11", "CES-D_12", "CES-D_13", "CES-D_14", "CES-D_15", "CES-D_16", "CES-D_17", "CES-D_18", "CES-D_19", "CES-D_20"
+        "CES-D_1", "CES-D_2", "CES-D_3", "CES-D_4", "CES-D_5",
+        "CES-D_6", "CES-D_7", "CES-D_8", "CES-D_9", "CES-D_10",
+        "CES-D_11", "CES-D_12", "CES-D_13", "CES-D_14", "CES-D_15",
+        "CES-D_16", "CES-D_17", "CES-D_18", "CES-D_19", "CES-D_20"
     )
 )
 
 
 # test the function for one instrument
-match_gad = match_instruments(list(instrument_gad))
-crosswalk_table_gad = generate_crosswalk_table(match_gad, 0.7)
+match_gad <- match_instruments(list(instrument_gad))
+crosswalk_table_gad <- generate_crosswalk_table(match_gad$instruments, match_gad$matches, 0.7, TRUE, FALSE)
 
 # round match scores for testing
-crosswalk_table_gad$match_score = round(crosswalk_table_gad$match_score, 2)
+crosswalk_table_gad$match_score <- round(crosswalk_table_gad$match_score, 2)
 
 # crosswalk table from web version
-expected_crosswalk_table_gad = data.frame(
-            pair_name = c("1_7", "2_3"),
-            question1_no = c("GAD-7_1", "GAD-7_2"),
-            question1_text = c("Feeling nervous, anxious, or on edge", "Not being able to stop or control worrying"),
-            question2_no = c("GAD-7_7", "GAD-7_3"),
-            question2_text = c("Feeling afraid, as if something awful might happen", "Worrying too much about different things"),
-            match_score = c(0.71, 0.76)
-        )
+expected_crosswalk_table_gad <- data.frame(
+    pair_name = c("GAD-7_GAD-7_1_GAD-7_GAD-7_7", "GAD-7_GAD-7_2_GAD-7_GAD-7_3"),
+    question1_id = c("GAD-7_GAD-7_1", "GAD-7_GAD-7_2"),
+    question1_no = c("GAD-7_1", "GAD-7_2"),
+    question1_text = c("Feeling nervous, anxious, or on edge", "Not being able to stop or control worrying"),
+    question2_id = c("GAD-7_GAD-7_7", "GAD-7_GAD-7_3"),
+    question2_no = c("GAD-7_7", "GAD-7_3"),
+    question2_text = c(
+        "Feeling afraid, as if something awful might happen",
+        "Worrying too much about different things"
+    ),
+    match_score = c(0.71, 0.76)
+)
 
 # test if the output is the same as the web version
 expect_equal(crosswalk_table_gad, expected_crosswalk_table_gad)
 
 
 # now test the within_instrument_matches toggle
-match_both = match_instruments(list(instrument_gad, instrument_cesd))
-crosswalk_table_both = generate_crosswalk_table(match_both, 0.7, within_instrument_matches = FALSE)
-crosswalk_table_both$match_score = round(crosswalk_table_both$match_score, 2)
+match_both <- match_instruments(list(instrument_gad, instrument_cesd))
+crosswalk_table_both <- generate_crosswalk_table(
+    match_both$instruments,
+    match_both$matches,
+    0.7,
+    is_allow_within_instrument_matches = FALSE
+)
+crosswalk_table_both$match_score <- round(crosswalk_table_both$match_score, 2)
 
 # crosswalk table from web version
-expected_crosswalk_table_both = data.frame(
-            pair_name = c("7_17"),
-            question1_no = c("GAD-7_7"),
-            question1_text = c("Feeling afraid, as if something awful might happen"),
-            question2_no = c("CES-D_10"),
-            question2_text = c("I felt fearful."),
-            match_score = c(0.78)
-        )
+expected_crosswalk_table_both <- data.frame(
+    pair_name = "GAD-7_GAD-7_7_CES-D_CES-D_10",
+    question1_id = "GAD-7_GAD-7_7",
+    question1_no = "GAD-7_7",
+    question1_text = "Feeling afraid, as if something awful might happen",
+    question2_id = "CES-D_CES-D_10",
+    question2_no = "CES-D_10",
+    question2_text = "I felt fearful.",
+    match_score = 0.78
+)
 
 expect_equal(crosswalk_table_both, expected_crosswalk_table_both)

@@ -20,13 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-library(testthat)
 
-questions_en = list("I feel nervous", "I don't feel nervous")
-instrument_en = create_instrument_from_list(question_texts=questions_en)
+questions_en <- list("I feel nervous", "I don't feel nervous")
+instrument_en <- create_instrument_from_list(question_texts = questions_en)
 
 # test single instrument with negation on as default
-match = match_instruments(instrument_en)
+match <- match_instruments(instrument_en)
 
 expect_equal(2, length(match$instruments[[1]]$questions))
 expect_equal(2, length(match$matches))
@@ -37,7 +36,7 @@ expect_gt(0, match$matches[[2]][[1]])
 
 
 # test single instrument without negation
-match = match_instruments(instrument_en, is_negate = FALSE)
+match <- match_instruments(instrument_en, is_negate = FALSE)
 
 expect_equal(2, length(match$instruments[[1]]$questions))
 expect_equal(2, length(match$matches))

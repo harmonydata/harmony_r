@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-' Create instrument from list
+#' Create instrument from list
 #'
 #' This function creates an instrument from a list of questions.
 #'
@@ -44,9 +44,9 @@
 #' @export
 #' @author Alex Nikic
 
-create_instrument_from_list = function(question_texts, question_numbers = NULL, instrument_name = "My instrument") {
-file_name = "random file"
-    data = list(
+create_instrument_from_list <- function(question_texts, question_numbers = NULL, instrument_name = "My instrument") {
+    file_name <- "random file"
+    data <- list(
         file_id = paste(uuid::UUIDgenerate(output = "raw"), collapse = ""),
         instrument_id = paste(uuid::UUIDgenerate(output = "raw"), collapse = ""),
         instrument_name = instrument_name,
@@ -55,14 +55,14 @@ file_name = "random file"
 
     # add in questions
     for (i in seq_along(question_texts)) {
-        question = list(
+        question <- list(
             question_text = question_texts[[i]],
             question_no = ifelse(is.null(question_numbers[[i]]), paste(i), question_numbers[[i]]),
             instrument_id = data$instrument_id,
             instrument_name = data$instrument_name
         )
 
-        data$questions[[i]] = question
+        data$questions[[i]] <- question
     }
 
     data
