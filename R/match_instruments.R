@@ -88,7 +88,7 @@ match_instruments <- function(instruments, is_negate = TRUE) {
 
     #from questions u need to delete anything after source page
     bod <- jsonlite::toJSON(instruments, pretty = TRUE, auto_unbox = TRUE)
-    res <- httr::POST(url = paste0(pkg.globals$url, "/text/match?is_negate=", is_negate),
+    res <- httr::POST(url = paste0(pkg_globals$url, "/text/match?is_negate=", is_negate),
                       httr::add_headers(.headers = headers), body = bod, encode = "json")
     #contents
     conten <- content(res)
