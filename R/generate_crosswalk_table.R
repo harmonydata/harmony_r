@@ -23,7 +23,7 @@
 #' Generate Crosswalk Table Function
 #'
 #' Generate a crosswalk table for a list of instruments, given the similarity matrix that came out of the match function.
-#'  A crosswalk is a list of pairs of variables from different studies that can be harmonised.
+#' A crosswalk is a list of pairs of variables from different studies that can be harmonised.
 #'
 #' @param instruments The original list of instruments, each containing a question. The sum of the number of questions in all instruments is the total number of questions which should equal both the width and height of the similarity matrix.
 #' @param similarity The cosine similarity matrix from Harmony
@@ -67,11 +67,17 @@
 #' @author Alex Nikic
 
 
-generate_crosswalk_table = function(instruments, similarity, threshold, is_allow_within_instrument_matches=FALSE, is_enforce_one_to_one = FALSE) {
+generate_crosswalk_table <- function(
+    instruments,
+    similarity,
+    threshold,
+    is_allow_within_instrument_matches = FALSE,
+    is_enforce_one_to_one = FALSE
+) {
     # match$questions are the questions
     # match$matches is the similarity matrix
 
-    matching_pairs = data.frame(
+    matching_pairs <- data.frame(
         pair_name = character(),        # Name of the survey pair
         question1_id	= character(), # Name of the first question pair
         question1_no = character(),     # ID of question from first survey
@@ -84,14 +90,14 @@ generate_crosswalk_table = function(instruments, similarity, threshold, is_allow
 
 
     instrument_lookup <- purrr::set_names(
-      purrr::map_chr(instruments, "instrument_name"),
-      purrr::map_chr(instruments, "instrument_id")
+        purrr::map_chr(instruments, "instrument_name"),
+        purrr::map_chr(instruments, "instrument_id")
     )
     questions <- unlist(lapply(instruments, function(x) x$questions), recursive = FALSE)
 
     questions <- purrr::map(questions, function(question) {
-      question$instrument_name <- instrument_lookup[[question$instrument_id]]
-      question
+        question$instrument_name <- instrument_lookup[[question$instrument_id]]
+        question
     })
 
     # Initialize sets to track used questions (only if needed)
@@ -99,47 +105,49 @@ generate_crosswalk_table = function(instruments, similarity, threshold, is_allow
     used_question2 <- c()
     # Iterate through all pairs of questions
     for (i in seq_along(questions)) {
-      for (j in seq_along(questions)) {
-        # Check for non-duplicate and similarity above threshold
-        if (j > i & similarity[[i]][[j]] > threshold) {
+        for (j in seq_along(questions)) {
+            # Check for non-duplicate and similarity above threshold
+            if (j > i && similarity[[i]][[j]] > threshold) {
 
-          # If one-to-one matching is enforced, skip already matched questions
-          if (is_enforce_one_to_one) {
-            if (i %in% used_question1 | j %in% used_question2) {
-              next
+                # If one-to-one matching is enforced, skip already matched questions
+                if (is_enforce_one_to_one) {
+                    if (i %in% used_question1 || j %in% used_question2) {
+                        next
+                    }
+                }
+
+                # If within_instrument_matches is FALSE, skip if the questions are from the same instrument
+                if (!is_allow_within_instrument_matches) {
+                    assertthat::assert_that(!is.null(questions[[i]]$instrument_id))
+                    assertthat::assert_that(!is.null(questions[[j]]$instrument_id))
+
+                    if (questions[[i]]$instrument_id == questions[[j]]$instrument_id) {
+                        next
+                    }
+                }
+
+                # Append to dataframe
+                matching_pairs <- rbind(matching_pairs, data.frame(
+                    pair_name = paste(questions[[i]]$instrument_name,  questions[[i]]$question_no,
+                                      questions[[j]]$instrument_name, questions[[j]]$question_no, sep = "_"),
+                    question1_id = paste(questions[[i]]$instrument_name, questions[[i]]$question_no, sep = "_"),
+                    question1_no = questions[[i]]$question_no,
+                    question1_text = questions[[i]]$question_text,
+                    question2_id = paste(questions[[j]]$instrument_name, questions[[j]]$question_no, sep = "_"),
+                    question2_no = questions[[j]]$question_no,
+                    question2_text = questions[[j]]$question_text,
+                    match_score = as.numeric(similarity[[i]][[j]])
+                )
+                )
+
+                # If enforcing one-to-one matching, mark questions as used
+                if (is_enforce_one_to_one) {
+                    used_question1 <- c(used_question1, i)
+                    used_question2 <- c(used_question2, j)
+                }
             }
-          }
-
-          # If within_instrument_matches is FALSE, skip if the questions are from the same instrument
-          if (!is_allow_within_instrument_matches) {
-            assertthat::assert_that(!is.null(questions[[i]]$instrument_id))
-            assertthat::assert_that(!is.null(questions[[j]]$instrument_id))
-
-            if (questions[[i]]$instrument_id == questions[[j]]$instrument_id) {
-              next
-            }
-          }
-
-          # Append to dataframe
-          matching_pairs <- rbind(matching_pairs, data.frame(
-            pair_name = paste(questions[[i]]$instrument_name,  questions[[i]]$question_no,
-                              questions[[j]]$instrument_name, questions[[j]]$question_no, sep="_"),
-            question1_id = paste(questions[[i]]$instrument_name, questions[[i]]$question_no, sep="_"),
-            question1_no = questions[[i]]$question_no,
-            question1_text = questions[[i]]$question_text,
-            question2_id = paste(questions[[j]]$instrument_name, questions[[j]]$question_no, sep="_"),
-            question2_no = questions[[j]]$question_no,
-            question2_text = questions[[j]]$question_text,
-            match_score = as.numeric(similarity[[i]][[j]])
-          ))
-
-          # If enforcing one-to-one matching, mark questions as used
-          if (is_enforce_one_to_one) {
-            used_question1 <- c(used_question1, i)
-            used_question2 <- c(used_question2, j)
-          }
         }
-      }
     }
+
     matching_pairs
 }

@@ -46,16 +46,23 @@
 #'
 #' @export
 #' @author Ulster University [cph]
+
+
 get_example_instruments <- function() {
+    headers <- c(
+        `accept` = "application/json",
+        `content-type` = "application/x-www-form-urlencoded"
+    )
 
-  headers = c(
-    `accept` = 'application/json',
-    `content-type` = 'application/x-www-form-urlencoded'
-  )
+    res <- httr::POST(url = paste0(pkg_globals$url, "/text/examples"), httr::add_headers(.headers = headers))
 
-  res <- httr::POST(url = paste0(pkg.globals$url, '/text/examples'), httr::add_headers(.headers=headers))
+    cont <- content(res)
 
-  cont <- content(res)
+    # assign keys to each instrument based on their instrument_name
+    output <- list()
+    for (i in seq_along(cont)) {
+        output[[cont[[i]]$instrument_name]] <- cont[[i]]
+    }
 
-  return(cont)
+    return(output)
 }

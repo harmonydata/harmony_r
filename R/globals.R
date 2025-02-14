@@ -20,8 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-pkg.globals <- new.env()
-pkg.globals$url <- 'https://api.harmonydata.ac.uk'
+pkg_globals <- new.env()
+pkg_globals$url <- "https://api.harmonydata.ac.uk"
 #' Set 'Harmony' URL
 #'
 #' This function sets the 'Harmony' API URL to be used in the package. By default,
@@ -47,6 +47,6 @@ pkg.globals$url <- 'https://api.harmonydata.ac.uk'
 #'
 #' @export
 #' @author Ulster University [cph]
-set_url <- function(harmony_url = 'https://api.harmonydata.ac.uk') {
-  pkg.globals$url <- harmony_url
+set_url <- function(harmony_url = "https://api.harmonydata.ac.uk") {
+    pkg_globals$url <- harmony_url
 }
