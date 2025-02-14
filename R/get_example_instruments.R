@@ -54,7 +54,7 @@ get_example_instruments <- function() {
         `content-type` = "application/x-www-form-urlencoded"
     )
 
-    res <- httr::POST(url = paste0(pkg.globals$url, "/text/examples"), httr::add_headers(.headers = headers))
+    res <- httr::POST(url = paste0(pkg_globals$url, "/text/examples"), httr::add_headers(.headers = headers))
 
     cont <- content(res)
 

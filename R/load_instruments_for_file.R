@@ -87,7 +87,7 @@ load_instruments_from_file <- function(path) {
     #add brackets
     #send contents
     #change url to be an enviroment variable
-    res <- httr::POST(url = paste0(pkg.globals$url, "/text/parse"), encode = "json",
+    res <- httr::POST(url = paste0(pkg_globals$url, "/text/parse"), encode = "json",
                       httr::add_headers(.headers = headers), body = data_json)
     #contents
     conten <- content(res)
