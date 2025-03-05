@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_instrument_from_list.R
 \name{create_instrument_from_list}
 \alias{create_instrument_from_list}
-\title{This function creates an instrument from a list of questions.}
+\title{Create instrument from list}
 \usage{
 create_instrument_from_list(
   question_texts,

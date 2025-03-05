@@ -1,7 +1,7 @@
 Package: harmonydata
 Type: Package
 Title: R Library for 'Harmony'
-Version: 0.1.1
+Version: 0.2.1
 Authors@R: c(
   person("Omar", "Hassoun", email = "omtarful@gmail.com", role = c("aut", "cre")),
   person("Thomas", "Wood", email = "thomas@fastdatascience.com", role = c("ctb")),

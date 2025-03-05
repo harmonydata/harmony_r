@@ -28,7 +28,7 @@ A crosswalk table as a DataFrame.
 }
 \description{
 Generate a crosswalk table for a list of instruments, given the similarity matrix that came out of the match function.
- A crosswalk is a list of pairs of variables from different studies that can be harmonised.
+A crosswalk is a list of pairs of variables from different studies that can be harmonised.
 }
 \examples{
 \donttest{
