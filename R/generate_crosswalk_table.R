@@ -59,10 +59,6 @@
 #'
 #' }
 #'
-#'
-#' @references
-#' For more information about the 'Harmony Data API', visit: \url{https://api.harmonydata.org/docs}
-#'
 #' @export
 #' @author Alex Nikic
 

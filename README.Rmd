@@ -13,7 +13,50 @@ knitr::opts_chunk$set(
 )
 ```
 
+![](https://raw.githubusercontent.com/harmonydata/brand/main/Logo/PNG/%D0%BB%D0%BE%D0%B3%D0%BE%20%D1%84%D1%83%D0%BB-05.png)
+
 # Harmony R library: harmonydata
+
+
+You can also **join our [Discord server](https://discord.gg/harmonydata)!**  
+If you found Harmony helpful, you can [leave us a review](https://g.page/r/CaRWc2ViO653EBM/review)!  
+
+## 🧠 What Does Harmony Do?
+
+Psychologists and social scientists often have to **match items** in different questionnaires, such as:  
+
+> *"I often feel anxious"*  
+> *"Feeling nervous, anxious or afraid"*
+
+This process is called **harmonisation**.
+
+### 🔹 The Problem
+- Harmonisation is a **time-consuming** and **subjective** process.  
+- Researchers have to **manually go through long PDFs** of questionnaires.  
+- Extracting questions and putting them into **Excel** is tedious.  
+
+### 🔹 The Solution: Harmony  
+🚀 **Harmony** uses **natural language processing (NLP)** and **generative AI models** to:
+- Automatically **match similar questionnaire items**.  
+- Help researchers work across **multiple languages**.  
+- Save **time** and **effort** in data harmonisation.
+
+
+## 📂 Looking for Examples?  
+
+Check out our **[examples repository](https://github.com/harmonydata/harmony_examples)** for hands-on demonstrations.  ## 🌍 The Harmony Project  
+
+**Harmony** is an **AI-powered tool** that helps researchers **compare items from questionnaires** and **identify similar content**.  
+
+🔹 **Try Harmony:** [Harmony Web App](https://harmonydata.ac.uk/app)  
+🔹 **Read our blog:** [Harmony Blog](https://harmonydata.ac.uk/blog/)  
+
+
+## 📞 Who to Contact?  
+
+🔹 **Harmony Team:** [harmonydata.ac.uk](https://harmonydata.ac.uk/)  
+🔹 **Thomas Wood:** [fastdatascience.com](https://fastdatascience.com/)  
+
 
 ## Getting started with the Harmony R library
 
@@ -28,7 +71,6 @@ knitr::opts_chunk$set(
 * [View the PDF documentation of the R package on CRAN](https://cran.r-project.org/web/packages/harmonydata/harmonydata.pdf)
 
 
-
 ### Installing R library
 
 You can install the development version of harmonydata from [GitHub](https://github.com/harmonydata/harmony_r) with:
@@ -39,10 +81,15 @@ library(devtools)
 devtools::install_github("harmonydata/harmony_r")
 ```
 
+or you can install it via [CRAN](https://cran.r-project.org/):
+
+```{r, eval = FALSE}
+install.packages("harmonydata")
+```
+
 ## Setting up domain
 
 Before starting, you can set up the remote API endpoint for harmony using this function. By default it uses the remote Harmony API [https://api.harmonydata.ac.uk](https://api.harmonydata.ac.uk){.uri}
-
 
 
 ```{r}
@@ -51,19 +98,19 @@ harmonydata::set_url()
 
 For example, if you want to use Harmony locally, you can run the [Harmony API as a Docker container](https://github.com/harmonydata/harmonyapi). By default it runs on localhost at port 8000. In this case you can run this command to run it locally:
 
-```{bash}
+```{bash, eval=FALSE}
 docker run -p 8000:8000 harmonydata/harmonylocal
 ```
 
 Now in R you can set the R library to point to your local Harmony on Docker.
 
-```{r}
+```{r, eval = FALSE}
 harmonydata::set_url("http://localhost:8000")
 ```
 
 ## Parsing a raw file into an Instrument
 
-If you want to read in a raw (unstructured) PDF or Excel file, you can do this via a POST request to the REST API. This will convert the file into an Instrument object in JSON.It returns the instrument as a list.
+If you want to read in a raw (unstructured) PDF or Excel file, you can do this via a POST request to the REST API. This will convert the file into an Instrument object in JSON. It returns the instrument as a list.
 
 ```{r example}
 library(harmonydata)
@@ -81,7 +128,7 @@ names(instrument_2[[1]])
 
 ## Matching instruments
 
-You can get a list containing the results of the match.Here we can see a list of similarity score for each question comapred to all the other questions in th other questionaire.
+You can get a list containing the results of the match. Here we can see a list of similarity score for each question comapred to all the other questions in th other questionaire.
 
 ```{r}
 instruments = append(instrument, instrument_2)
@@ -102,13 +149,13 @@ To run harmonydata locally, first you need to pull the docker image using the te
 
 ## 1. Pull docker image
 
-``` shell
+```{bash, eval=FALSE}
 docker pull harmonydata/harmonyapi
 ```
 
 ## 2. Run docker image
 
-``` shell
+```{bash, eval=FALSE}
 docker run -p 8000:80 harmonyapi
 ```
 
@@ -116,7 +163,7 @@ docker run -p 8000:80 harmonyapi
 
 Set url to use localhost. Don't forget to expose port 8000:
 
-```{r}
+```{r, eval = FALSE}
 set_url(harmony_url = "http://localhost:8000")
 ```
 
@@ -130,18 +177,16 @@ You can cite our validation paper:
 
 A BibTeX entry for LaTeX users is
 
-{{< rawhtml >}}
-<pre>
+```bibtex
 @article{mcelroy2024using,
   title={Using natural language processing to facilitate the harmonisation of mental health questionnaires: a validation study using real-world data},
   author={McElroy, Eoin and Wood, Thomas and Bond, Raymond and Mulvenna, Maurice and Shevlin, Mark and Ploubidis, George B and Hoffmann, Mauricio Scopel and Moltrecht, Bettina},
-  journal={BMC psychiatry},
+  journal={BMC Psychiatry},
   volume={24},
   number={1},
   pages={530},
   year={2024},
   publisher={Springer}
 }
-</pre>
-{{< /rawhtml >}}
 
+```

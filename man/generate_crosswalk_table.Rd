@@ -54,10 +54,6 @@ crosswalk_table.df = generate_crosswalk_table(
 
 }
 
-
-}
-\references{
-For more information about the 'Harmony Data API', visit: \url{https://api.harmonydata.org/docs}
 }
 \author{
 Alex Nikic

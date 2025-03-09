@@ -30,9 +30,7 @@ instrument = create_instrument_from_list(
 }
 
 
-}
-\references{
-For more information about the 'Harmony Data API', visit: \url{https://api.harmonydata.org/docs}
+
 }
 \author{
 Alex Nikic

@@ -38,9 +38,6 @@ matched_instruments <- match_instruments(instruments)
 }
 
 }
-\references{
-For more information about the 'Harmony Data API', visit: \url{https://api.harmonydata.org/docs}
-}
 \author{
 Ulster University [cph]
 }
