@@ -1,21 +1,23 @@
 ---
-title: "Harmony walkthrough - R library"
-output: html_notebook
+title: An R Markdown document converted from "/home/thomas/Downloads/Harmony_R_example.ipynb"
+output: html_document
 ---
+
+# Harmony walkthrough - R library
 
 ![](https://raw.githubusercontent.com/harmonydata/brand/main/Logo/PNG/%D0%BB%D0%BE%D0%B3%D0%BE%20%D1%84%D1%83%D0%BB-05.png)
 
-This notebook shows how you can use Harmony to find the similarity matrix between two questionnaires from Harmony's database, and a third questionnaire which you input here (Norwegian GAD-7).
-
+This notebook shows how you can use Harmony to find the similarity matrix between two questionnaires.
+  
 The Harmony project is a data harmonisation project that uses [Natural Language Processing](https://fastdatascience.com/guide-natural-language-processing-nlp/) to help researchers make better use of existing data from different studies by supporting them with the harmonisation of various measures and items used in different studies.
 
 Harmony is a collaboration project between [Ulster University](https://ulster.ac.uk/), [University College London](https://ucl.ac.uk/), the [Universidade Federal de Santa Maria](https://www.ufsm.br/), and [Fast Data Science](http://fastdatascience.com/).  Harmony is funded by [Wellcome](https://wellcome.org/) as part of the [Wellcome Data Prize in Mental Health](https://wellcome.org/grant-funding/schemes/wellcome-mental-health-data-prize).
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+First let's install and import Harmony. If you haven't already, you need to install it with `install.packages("harmonydata")`.
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
-
-First let's import Harmony. If you haven't already, you need to install it with `install.packages("harmonydata")`.
+```{r}
+install.packages("harmonydata")
+```
 
 ```{r}
 library(harmonydata)
@@ -34,6 +36,7 @@ names(example_instruments)
 ```
 
 Let's use the CES-D English, GAD-7 Portuguese and create a GAD-7 Norwegian instrument.
+
 ```{r}
 ces_d_english <- example_instruments[["CES_D English"]]
 gad_7_portuguese <- example_instruments[["GAD-7 Portuguese"]]
@@ -53,30 +56,35 @@ We can concatenate our instruments together:
 instruments_list <- list(ces_d_english, gad_7_portuguese, gad_7_norwegian)
 ```
 
-Let's call Harmony to calculate the match:
+Let’s call Harmony to calculate the match:
 
 ```{r}
 match <- match_instruments(instruments_list)
 ```
 
-Check what has come out of the match:
+We also
+
+```{r}
+help(match_instruments)
+```
+
+**Check** what has come out of the match:
 
 ```{r}
 names(match)
 ```
+
 The first question is CES_D English question 1.
 
 ```{r}
 match$questions[[1]]
 ```
 
-
-The total number of questions are:
+The total number of questions is:
 
 ```{r}
 length(match$questions)
 ```
-
 
 The first three entries in the similarity matrix are:
 
@@ -84,7 +92,7 @@ The first three entries in the similarity matrix are:
 match$matches[[1]][c(1, 2, 3)]
 ```
 
-## Generate a crosswalk table
+## Generate a Crosswalk table
 
 We can generate a crosswalk table to match questions with a cosine similarity above a certain threshold.
 
@@ -151,3 +159,16 @@ Now we can save to CSV:
 ```{r}
 write.csv(df, "matches.csv")
 ```
+
+If you open the CSV generated, you can see the complete matrix. You can also open in Excel.
+
+You can also see the file in Google Colab online by going into the file system on the left panel (see below screenshot).
+
+![Screenshot](https://raw.githubusercontent.com/harmonydata/experiments/main/csv_colab.png)
+
+Let's take a look at the first few lines of the CSV file using the Bash command `head`:
+
+```{r}
+system("head matches.csv", intern=TRUE)
+```
+
