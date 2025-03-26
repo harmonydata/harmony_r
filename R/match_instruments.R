@@ -27,6 +27,13 @@
 #'
 #' @param instruments A list of instruments to be matched.
 #' @param is_negate A boolean value to toggle question negation. Default is TRUE.
+#' @param clustering_algorithm A string value to select the clustering algorithm to use. Must be one of:
+#'   * `"affinity_propagation"`: Affinity propagation clustering.
+#'   * `"kmeans"`: K-Means clustering.
+#'   * `"deterministic"`: Deterministic clustering.
+#'   * `"hdbscan"`: HDBSCAN clustering.
+#'
+#'   The default is `"affinity_propagation"`.
 #' @return A list of matched instruments returned from the 'Harmony Data API'.
 #'
 #' @examples
@@ -56,7 +63,7 @@
 #' @author Ulster University [cph]
 
 
-match_instruments <- function(instruments, is_negate = TRUE) {
+match_instruments <- function(instruments, is_negate = TRUE, clustering_algorithm = "affinity_propagation") {
     #most of the work is simply creating the body
     #steps to create the body
     #take a list of instruments and convert it to a format that is acceptable by the databse
@@ -86,7 +93,12 @@ match_instruments <- function(instruments, is_negate = TRUE) {
 
     #from questions u need to delete anything after source page
     bod <- jsonlite::toJSON(instruments, pretty = TRUE, auto_unbox = TRUE)
-    res <- httr::POST(url = paste0(pkg_globals$url, "/text/match?is_negate=", is_negate),
+    res <- httr::POST(
+                      url = paste0(
+                          pkg_globals$url,
+                          "/text/match?is_negate=", is_negate,
+                          "&clustering_algorithm=", clustering_algorithm
+                      ),
                       httr::add_headers(.headers = headers), body = bod, encode = "json")
     #contents
     conten <- content(res)

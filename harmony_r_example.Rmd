@@ -112,11 +112,40 @@ df_crosswalk_table
 
 ## Cluster the questions
 
-Display the clusters that come out of Harmony by default.
+Display the clusters and cluster keywords that come out of Harmony by default.
 
 ```{r}
 for (i in seq_along(match$clusters)) {
-    print(paste("Cluster", match$clusters[[i]]$cluster_id, match$clusters[[i]]$text_description))
+    print(paste0("Cluster ", match$clusters[[i]]$cluster_id, ": ", match$clusters[[i]]$text_description))
+
+    keywords <- c()
+    for (j in seq_along(match$clusters[[i]]$keywords)) {
+        keywords <- c(keywords, match$clusters[[i]]$keywords[[j]])
+    }
+    keywords_output <- paste("Keywords:", paste(keywords, collapse = ", "))
+    print(keywords_output)
+
+    for (j in seq_along(match$clusters[[i]]$item_ids)) {
+        id <- match$clusters[[i]]$item_ids[[j]]
+        print(paste("    ", match$questions[[id]]$question_text))
+    }
+}
+```
+
+We can also choose between different clustering algorithms for the matcher to use.
+
+```{r}
+match <- match_instruments(instruments_list, clustering_algorithm = "kmeans")
+
+for (i in seq_along(match$clusters)) {
+    print(paste0("Cluster ", match$clusters[[i]]$cluster_id, ": ", match$clusters[[i]]$text_description))
+
+    keywords <- c()
+    for (j in seq_along(match$clusters[[i]]$keywords)) {
+        keywords <- c(keywords, match$clusters[[i]]$keywords[[j]])
+    }
+    keywords_output <- paste("Keywords:", paste(keywords, collapse = ", "))
+    print(keywords_output)
 
     for (j in seq_along(match$clusters[[i]]$item_ids)) {
         id <- match$clusters[[i]]$item_ids[[j]]
@@ -169,6 +198,6 @@ You can also see the file in Google Colab online by going into the file system o
 Let's take a look at the first few lines of the CSV file using the Bash command `head`:
 
 ```{r}
-system("head matches.csv", intern=TRUE)
+system("head matches.csv", intern = TRUE)
 ```
 
