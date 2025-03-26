@@ -4,12 +4,20 @@
 \alias{match_instruments}
 \title{Match Instruments Function}
 \usage{
-match_instruments(instruments, is_negate = TRUE)
+match_instruments(
+  instruments,
+  is_negate = TRUE,
+  clustering_algorithm = "affinity_propagation"
+)
 }
 \arguments{
 \item{instruments}{A list of instruments to be matched.}
 
 \item{is_negate}{A boolean value to toggle question negation. Default is TRUE.}
+
+\item{clustering_algorithm}{A string value to select the clustering algorithm to use.
+Must be one of: "affinity_propagation", "kmeans", "deterministic", "hdbscan".
+Default is "affinity_propagation".}
 }
 \value{
 A list of matched instruments returned from the 'Harmony Data API'.

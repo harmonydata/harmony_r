@@ -27,13 +27,10 @@
 #'
 #' @param instruments A list of instruments to be matched.
 #' @param is_negate A boolean value to toggle question negation. Default is TRUE.
-#' @param clustering_algorithm A string value to select the clustering algorithm to use. Must be one of:
-#'   * `"affinity_propagation"`: Affinity propagation clustering.
-#'   * `"kmeans"`: K-Means clustering.
-#'   * `"deterministic"`: Deterministic clustering.
-#'   * `"hdbscan"`: HDBSCAN clustering.
+#' @param clustering_algorithm A string value to select the clustering algorithm to use.
+#' Must be one of: "affinity_propagation", "kmeans", "deterministic", "hdbscan".
+#' Default is "affinity_propagation".
 #'
-#'   The default is `"affinity_propagation"`.
 #' @return A list of matched instruments returned from the 'Harmony Data API'.
 #'
 #' @examples
