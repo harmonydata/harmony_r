@@ -16,11 +16,14 @@ Harmony is a collaboration project between [Ulster University](https://ulster.ac
 First let's install and import Harmony. If you haven't already, you need to install it with `install.packages("harmonydata")`.
 
 ```{r}
-install.packages("harmonydata")
+#install.packages("harmonydata")
 ```
 
 ```{r}
 library(harmonydata)
+```
+```{r, echo=FALSE}
+#set_url("localhost:8000")
 ```
 
 Now we can create our instruments.
@@ -53,7 +56,7 @@ gad_7_norwegian <- create_instrument_from_list(
 We can concatenate our instruments together:
 
 ```{r}
-instruments_list <- list(ces_d_english, gad_7_portuguese, gad_7_norwegian)
+instruments_list <- list(ces_d_english, gad_7_portuguese)
 ```
 
 Let’s call Harmony to calculate the match:
@@ -86,11 +89,17 @@ The total number of questions is:
 length(match$questions)
 ```
 
-The first three entries in the similarity matrix are:
+The first three entries in the similarity matrix for the questions are:
 
 ```{r}
 match$matches[[1]][c(1, 2, 3)]
 ```
+The first three entries in the similarity matrix for the response options are:
+
+```{r}
+match$response_options_similarity[[1]][c(1, 2, 3)]
+```
+
 
 ## Generate a Crosswalk table
 
@@ -198,6 +207,6 @@ You can also see the file in Google Colab online by going into the file system o
 Let's take a look at the first few lines of the CSV file using the Bash command `head`:
 
 ```{r}
-system("head matches.csv", intern = TRUE)
+#system("head matches.csv", intern = TRUE)
 ```
 
