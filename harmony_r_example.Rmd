@@ -23,7 +23,7 @@ First let's install and import Harmony. If you haven't already, you need to inst
 library(harmonydata)
 ```
 ```{r, echo=FALSE}
-#set_url("localhost:8000")
+set_url("localhost:8000")
 ```
 
 Now we can create our instruments.
@@ -56,13 +56,13 @@ gad_7_norwegian <- create_instrument_from_list(
 We can concatenate our instruments together:
 
 ```{r}
-instruments_list <- list(ces_d_english, gad_7_portuguese)
+instruments_list <- list(ces_d_english, gad_7_portuguese, gad_7_norwegian)
 ```
 
 Let’s call Harmony to calculate the match:
 
 ```{r}
-match <- match_instruments(instruments_list)
+match <- match_instruments(instruments_list, topics=list("anxiety", "depression", "bother"))
 ```
 
 We also

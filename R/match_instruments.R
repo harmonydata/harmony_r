@@ -26,6 +26,7 @@
 #' and matches the instruments using the 'Harmony Data API'. It returns the matched instruments.
 #'
 #' @param instruments A list of instruments to be matched.
+#' @param topics A list of topics with which to tag the questions. Default is empty.
 #' @param is_negate A boolean value to toggle question negation. Default is TRUE.
 #' @param clustering_algorithm A string value to select the clustering algorithm to use.
 #' Must be one of: "affinity_propagation", "kmeans", "deterministic", "hdbscan".
@@ -49,7 +50,7 @@
 #'
 #' instruments <- list(instrument_A, instrument_B)
 #'
-#' matched_instruments <- match_instruments(instruments)
+#' matched_instruments <- match_instruments(instruments, topics=list("anxiety", "depression))
 #' }
 #'
 #' @import jsonlite
@@ -60,7 +61,7 @@
 #' @author Ulster University [cph]
 
 
-match_instruments <- function(instruments, is_negate = TRUE, clustering_algorithm = "affinity_propagation") {
+match_instruments <- function(instruments, topics = list(), is_negate = TRUE, clustering_algorithm = "affinity_propagation") {
     #most of the work is simply creating the body
     #steps to create the body
     #take a list of instruments and convert it to a format that is acceptable by the databse
@@ -87,6 +88,8 @@ match_instruments <- function(instruments, is_negate = TRUE, clustering_algorith
         }
     }
 
+    # add the topics
+    instruments[["topics"]] <- topics
 
     #from questions u need to delete anything after source page
     bod <- jsonlite::toJSON(instruments, pretty = TRUE, auto_unbox = TRUE)

@@ -416,9 +416,9 @@ gad_7_norwegian &lt;- create_instrument_from_list(
     instrument_name = &quot;GAD-7 Norwegian&quot;
 )</code></pre>
 <p>We can concatenate our instruments together:</p>
-<pre class="r"><code>instruments_list &lt;- list(ces_d_english, gad_7_portuguese)</code></pre>
+<pre class="r"><code>instruments_list &lt;- list(ces_d_english, gad_7_portuguese, gad_7_norwegian)</code></pre>
 <p>Let’s call Harmony to calculate the match:</p>
-<pre class="r"><code>match &lt;- match_instruments(instruments_list)</code></pre>
+<pre class="r"><code>match &lt;- match_instruments(instruments_list, topics=list(&quot;anxiety&quot;, &quot;depression&quot;, &quot;bother&quot;))</code></pre>
 <p>We also</p>
 <pre class="r"><code>help(match_instruments)</code></pre>
 <pre><code>## starting httpd help server ... done</code></pre>
@@ -460,11 +460,16 @@ gad_7_norwegian &lt;- create_instrument_from_list(
 ## $instrument_id
 ## [1] &quot;b45b7169e711414582768b8c8431027c&quot;
 ## 
+## $topics
+## $topics[[1]]
+## [1] &quot;bother&quot;
+## 
+## 
 ## $topics_auto
 ## list()</code></pre>
 <p>The total number of questions is:</p>
 <pre class="r"><code>length(match$questions)</code></pre>
-<pre><code>## [1] 27</code></pre>
+<pre><code>## [1] 29</code></pre>
 <p>The first three entries in the similarity matrix for the questions
 are:</p>
 <pre class="r"><code>match$matches[[1]][c(1, 2, 3)]</code></pre>
@@ -502,21 +507,41 @@ df_crosswalk_table &lt;- generate_crosswalk_table(
 )
 
 df_crosswalk_table</code></pre>
-<pre><code>##                             pair_name     question1_id question1_no
-## 1    CES_D English_6_CES_D English_17  CES_D English_6            6
-## 2 CES_D English_10_GAD-7 Portuguese_7 CES_D English_10           10
-## 3   CES_D English_12_CES_D English_16 CES_D English_12           12
-## 4   CES_D English_17_CES_D English_18 CES_D English_17           17
-##         question1_text       question2_id question2_no
-## 1    I felt depressed.   CES_D English_17           17
-## 2      I felt fearful. GAD-7 Portuguese_7            7
-## 3         I was happy.   CES_D English_16           16
-## 4 I had crying spells.   CES_D English_18           18
-##                                      question2_text match_score
-## 1                              I had crying spells.   0.7211359
-## 2 Sentir medo como se algo horrível fosse acontecer   0.8114453
-## 3                                   I enjoyed life.   0.7279788
-## 4                                       I felt sad.   0.7682066</code></pre>
+<pre><code>##                              pair_name       question1_id question1_no
+## 1     CES_D English_6_CES_D English_17    CES_D English_6            6
+## 2  CES_D English_10_GAD-7 Portuguese_7   CES_D English_10           10
+## 3    CES_D English_12_CES_D English_16   CES_D English_12           12
+## 4    CES_D English_17_CES_D English_18   CES_D English_17           17
+## 5 GAD-7 Portuguese_1_GAD-7 Norwegian_1 GAD-7 Portuguese_1            1
+## 6 GAD-7 Portuguese_2_GAD-7 Norwegian_2 GAD-7 Portuguese_2            2
+##                                             question1_text       question2_id
+## 1                                        I felt depressed.   CES_D English_17
+## 2                                          I felt fearful. GAD-7 Portuguese_7
+## 3                                             I was happy.   CES_D English_16
+## 4                                     I had crying spells.   CES_D English_18
+## 5          Sentir-se nervoso/a, ansioso/a ou muito tenso/a  GAD-7 Norwegian_1
+## 6 Não ser capaz de impedir ou de controlar as preocupações  GAD-7 Norwegian_2
+##   question2_no
+## 1           17
+## 2            7
+## 3           16
+## 4           18
+## 5            1
+## 6            2
+##                                                           question2_text
+## 1                                                   I had crying spells.
+## 2                      Sentir medo como se algo horrível fosse acontecer
+## 3                                                        I enjoyed life.
+## 4                                                            I felt sad.
+## 5                       Følt deg nervøs, engstelig eller veldig stresset
+## 6 Ikke klart å slutte å bekymre deg eller kontrolleren bekymringene dine
+##   match_score
+## 1   0.7211359
+## 2   0.8114453
+## 3   0.7279788
+## 4   0.7682066
+## 5   0.9261098
+## 6   0.8807539</code></pre>
 </div>
 <div id="cluster-the-questions" class="section level2">
 <h2>Cluster the questions</h2>
@@ -538,18 +563,18 @@ default.</p>
     }
 }</code></pre>
 <pre><code>## [1] &quot;Cluster 1: I was happy.&quot;
-## [1] &quot;Keywords: happy, enjoyed, future, hopeful&quot;
+## [1] &quot;Keywords: happy, enjoyed, hopeful&quot;
 ## [1] &quot;     I felt I was just as good as other people.&quot;
 ## [1] &quot;     I felt hopeful about the future.&quot;
 ## [1] &quot;     I was happy.&quot;
 ## [1] &quot;     I enjoyed life.&quot;
 ## [1] &quot;Cluster 2: I talked less than usual.&quot;
-## [1] &quot;Keywords: unfriendly, less, talked&quot;
+## [1] &quot;Keywords: unfriendly, usual, less&quot;
 ## [1] &quot;     I was bothered by things that usually don’t bother me.&quot;
 ## [1] &quot;     I talked less than usual.&quot;
 ## [1] &quot;     People were unfriendly.&quot;
 ## [1] &quot;Cluster 3: I felt sad.&quot;
-## [1] &quot;Keywords: depressed, fearful, lonely, sad, felt&quot;
+## [1] &quot;Keywords: depressed, fearful, sad, lonely, felt&quot;
 ## [1] &quot;     I did not feel like eating; my appetite was poor.&quot;
 ## [1] &quot;     I felt depressed.&quot;
 ## [1] &quot;     I thought my life had been a failure.&quot;
@@ -560,20 +585,24 @@ default.</p>
 ## [1] &quot;     I felt that people dislike me.&quot;
 ## [1] &quot;     Sentir medo como se algo horrível fosse acontecer&quot;
 ## [1] &quot;Cluster 4: I could not get “going.”&quot;
-## [1] &quot;Keywords: could, get, going, effort&quot;
+## [1] &quot;Keywords: could, restless, sleep, going, get&quot;
 ## [1] &quot;     I felt that I could not shake off the blues even with help from my family or friends.&quot;
 ## [1] &quot;     I had trouble keeping my mind on what I was doing.&quot;
 ## [1] &quot;     I felt that everything I did was an effort.&quot;
-## [1] &quot;     I could not get “going.”&quot;
-## [1] &quot;Cluster 5: Ficar tão agitado/a que se torna difícil permanecer sentado/a&quot;
-## [1] &quot;Keywords: ficar, restless&quot;
 ## [1] &quot;     My sleep was restless.&quot;
+## [1] &quot;     I could not get “going.”&quot;
+## [1] &quot;Cluster 5: Følt deg nervøs, engstelig eller veldig stresset&quot;
+## [1] &quot;Keywords: ficar, facilmente, aborrecido, irritado&quot;
 ## [1] &quot;     Sentir-se nervoso/a, ansioso/a ou muito tenso/a&quot;
+## [1] &quot;     Ficar tão agitado/a que se torna difícil permanecer sentado/a&quot;
+## [1] &quot;     Ficar facilmente aborrecido/a ou irritado/a&quot;
+## [1] &quot;     Følt deg nervøs, engstelig eller veldig stresset&quot;
+## [1] &quot;Cluster 6: Ikke klart å slutte å bekymre deg eller kontrolleren bekymringene dine&quot;
+## [1] &quot;Keywords: dificuldade, relaxar, diversas&quot;
 ## [1] &quot;     Não ser capaz de impedir ou de controlar as preocupações&quot;
 ## [1] &quot;     Preocupar-se muito com diversas coisas&quot;
 ## [1] &quot;     Dificuldade para relaxar&quot;
-## [1] &quot;     Ficar tão agitado/a que se torna difícil permanecer sentado/a&quot;
-## [1] &quot;     Ficar facilmente aborrecido/a ou irritado/a&quot;</code></pre>
+## [1] &quot;     Ikke klart å slutte å bekymre deg eller kontrolleren bekymringene dine&quot;</code></pre>
 <p>We can also choose between different clustering algorithms for the
 matcher to use.</p>
 <pre class="r"><code>match &lt;- match_instruments(instruments_list, clustering_algorithm = &quot;kmeans&quot;)
@@ -593,27 +622,13 @@ for (i in seq_along(match$clusters)) {
         print(paste(&quot;    &quot;, match$questions[[id]]$question_text))
     }
 }</code></pre>
-<pre><code>## [1] &quot;Cluster 3: I was bothered by things that usually don’t bother me.&quot;
-## [1] &quot;Keywords: less, usual, talked&quot;
-## [1] &quot;     I was bothered by things that usually don’t bother me.&quot;
-## [1] &quot;     I talked less than usual.&quot;
-## [1] &quot;Cluster 4: I did not feel like eating; my appetite was poor.&quot;
-## [1] &quot;Keywords: depressed, lonely, sad, spells&quot;
-## [1] &quot;     I did not feel like eating; my appetite was poor.&quot;
-## [1] &quot;     I felt depressed.&quot;
-## [1] &quot;     I felt that everything I did was an effort.&quot;
-## [1] &quot;     I thought my life had been a failure.&quot;
-## [1] &quot;     I felt lonely.&quot;
-## [1] &quot;     I had crying spells.&quot;
-## [1] &quot;     I felt sad.&quot;
-## [1] &quot;     I felt that people dislike me.&quot;
-## [1] &quot;Cluster 1: I felt that I could not shake off the blues even with help from my family or friends.&quot;
+<pre><code>## [1] &quot;Cluster 2: I was bothered by things that usually don’t bother me.&quot;
 ## [1] &quot;Keywords: fearful, ficar&quot;
-## [1] &quot;     I felt that I could not shake off the blues even with help from my family or friends.&quot;
+## [1] &quot;     I was bothered by things that usually don’t bother me.&quot;
 ## [1] &quot;     I had trouble keeping my mind on what I was doing.&quot;
 ## [1] &quot;     I felt fearful.&quot;
-## [1] &quot;     My sleep was restless.&quot;
-## [1] &quot;     I could not get “going.”&quot;
+## [1] &quot;     I talked less than usual.&quot;
+## [1] &quot;     People were unfriendly.&quot;
 ## [1] &quot;     Sentir-se nervoso/a, ansioso/a ou muito tenso/a&quot;
 ## [1] &quot;     Não ser capaz de impedir ou de controlar as preocupações&quot;
 ## [1] &quot;     Preocupar-se muito com diversas coisas&quot;
@@ -621,15 +636,31 @@ for (i in seq_along(match$clusters)) {
 ## [1] &quot;     Ficar tão agitado/a que se torna difícil permanecer sentado/a&quot;
 ## [1] &quot;     Ficar facilmente aborrecido/a ou irritado/a&quot;
 ## [1] &quot;     Sentir medo como se algo horrível fosse acontecer&quot;
-## [1] &quot;Cluster 2: I felt I was just as good as other people.&quot;
+## [1] &quot;     Følt deg nervøs, engstelig eller veldig stresset&quot;
+## [1] &quot;     Ikke klart å slutte å bekymre deg eller kontrolleren bekymringene dine&quot;
+## [1] &quot;Cluster 4: I did not feel like eating; my appetite was poor.&quot;
+## [1] &quot;Keywords: could, get, going&quot;
+## [1] &quot;     I did not feel like eating; my appetite was poor.&quot;
+## [1] &quot;     I felt that I could not shake off the blues even with help from my family or friends.&quot;
+## [1] &quot;     I felt that everything I did was an effort.&quot;
+## [1] &quot;     I could not get “going.”&quot;
+## [1] &quot;Cluster 5: I felt I was just as good as other people.&quot;
 ## [1] &quot;Keywords: happy, enjoyed, future, hopeful&quot;
 ## [1] &quot;     I felt I was just as good as other people.&quot;
 ## [1] &quot;     I felt hopeful about the future.&quot;
 ## [1] &quot;     I was happy.&quot;
 ## [1] &quot;     I enjoyed life.&quot;
-## [1] &quot;Cluster 5: People were unfriendly.&quot;
-## [1] &quot;Keywords: unfriendly, people&quot;
-## [1] &quot;     People were unfriendly.&quot;</code></pre>
+## [1] &quot;Cluster 3: I felt depressed.&quot;
+## [1] &quot;Keywords: depressed, lonely, sad, crying, spells&quot;
+## [1] &quot;     I felt depressed.&quot;
+## [1] &quot;     I thought my life had been a failure.&quot;
+## [1] &quot;     I felt lonely.&quot;
+## [1] &quot;     I had crying spells.&quot;
+## [1] &quot;     I felt sad.&quot;
+## [1] &quot;     I felt that people dislike me.&quot;
+## [1] &quot;Cluster 1: My sleep was restless.&quot;
+## [1] &quot;Keywords: sleep, restless&quot;
+## [1] &quot;     My sleep was restless.&quot;</code></pre>
 </div>
 <div id="display-the-similarities-between-instruments" class="section level2">
 <h2>Display the similarities between instruments</h2>
@@ -638,7 +669,9 @@ for (i in seq_along(match$clusters)) {
     obj &lt;- match$instrument_to_instrument_similarities[[i]]
     print(paste(&quot;F1 similarity of&quot;, obj$instrument_1_name, &quot;to&quot;, obj$instrument_2_name, &quot;is&quot;, obj$f1))
 }</code></pre>
-<pre><code>## [1] &quot;F1 similarity of CES_D English to GAD-7 Portuguese is 0.675&quot;</code></pre>
+<pre><code>## [1] &quot;F1 similarity of CES_D English to GAD-7 Portuguese is 0.675&quot;
+## [1] &quot;F1 similarity of CES_D English to GAD-7 Norwegian is 0.55&quot;
+## [1] &quot;F1 similarity of GAD-7 Portuguese to GAD-7 Norwegian is 0.642857142857143&quot;</code></pre>
 </div>
 <div id="saving-to-csvexcel" class="section level2">
 <h2>Saving to CSV/Excel</h2>
