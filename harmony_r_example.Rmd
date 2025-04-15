@@ -23,7 +23,7 @@ First let's install and import Harmony. If you haven't already, you need to inst
 library(harmonydata)
 ```
 ```{r, echo=FALSE}
-set_url("localhost:8000")
+#set_url("localhost:8000")
 ```
 
 Now we can create our instruments.
