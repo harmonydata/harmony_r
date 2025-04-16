@@ -28,16 +28,12 @@
 #' @param instruments A list of instruments to be matched.
 #' @param topics A list of topics with which to tag the questions. Default is empty.
 #' @param is_negate A boolean value to toggle question negation. Default is TRUE.
-#' @param clustering_algorithm A string value to select the clustering algorithm to use.
-#' Must be one of: "affinity_propagation", "kmeans", "deterministic", "hdbscan".
-#' Default is "affinity_propagation".
+#' @param clustering_algorithm A string value to select the clustering algorithm to use. Must be one of: "affinity_propagation", "kmeans", "deterministic", "hdbscan". Default is "affinity_propagation".
 #'
 #' @return A list of matched instruments returned from the 'Harmony Data API'.
 #'
 #' @examples
 #' \donttest{
-#'
-#'
 #'
 #' instrument_A <- create_instrument_from_list(list(
 #'   "How old are you?",
@@ -50,7 +46,10 @@
 #'
 #' instruments <- list(instrument_A, instrument_B)
 #'
-#' matched_instruments <- match_instruments(instruments, topics=list("anxiety", "depression))
+#' matched_instruments <- match_instruments(
+#'   instruments,
+#'   topics = list("anxiety", "depression")
+#' )
 #' }
 #'
 #' @import jsonlite

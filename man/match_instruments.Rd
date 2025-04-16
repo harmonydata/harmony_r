@@ -6,6 +6,7 @@
 \usage{
 match_instruments(
   instruments,
+  topics = list(),
   is_negate = TRUE,
   clustering_algorithm = "affinity_propagation"
 )
@@ -13,11 +14,11 @@ match_instruments(
 \arguments{
 \item{instruments}{A list of instruments to be matched.}
 
+\item{topics}{A list of topics with which to tag the questions. Default is empty.}
+
 \item{is_negate}{A boolean value to toggle question negation. Default is TRUE.}
 
-\item{clustering_algorithm}{A string value to select the clustering algorithm to use.
-Must be one of: "affinity_propagation", "kmeans", "deterministic", "hdbscan".
-Default is "affinity_propagation".}
+\item{clustering_algorithm}{A string value to select the clustering algorithm to use. Must be one of: "affinity_propagation", "kmeans", "deterministic", "hdbscan". Default is "affinity_propagation".}
 }
 \value{
 A list of matched instruments returned from the 'Harmony Data API'.
@@ -28,8 +29,6 @@ and matches the instruments using the 'Harmony Data API'. It returns the matched
 }
 \examples{
 \donttest{
-
-
 
 instrument_A <- create_instrument_from_list(list(
   "How old are you?",
@@ -42,7 +41,10 @@ instrument_B <- create_instrument_from_list(list(
 
 instruments <- list(instrument_A, instrument_B)
 
-matched_instruments <- match_instruments(instruments)
+matched_instruments <- match_instruments(
+  instruments,
+  topics = list("anxiety", "depression")
+)
 }
 
 }
