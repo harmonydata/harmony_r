@@ -15,7 +15,7 @@ generate_crosswalk_table(
 \arguments{
 \item{instruments}{The original list of instruments, each containing a question. The sum of the number of questions in all instruments is the total number of questions which should equal both the width and height of the similarity matrix.}
 
-\item{similarity}{The cosine similarity matrix from Harmony}
+\item{similarity}{The cosine similarity matrix that is outputed from the \code{\link{match_instruments}} function.}
 
 \item{threshold}{The minimum threshold that we consider a match. This is applied to the absolute match value. So if a question pair has similarity 0.2 and threshold = 0.5, then that question pair will be excluded. Leave as None if you don't want to apply any thresholding.}
 
@@ -27,8 +27,20 @@ generate_crosswalk_table(
 A crosswalk table as a DataFrame.
 }
 \description{
-Generate a crosswalk table for a list of instruments, given the similarity matrix that came out of the match function.
-A crosswalk is a list of pairs of variables from different studies that can be harmonised.
+A crosswalk is a table that lists matched variables from different studies or instruments,
+enabling data harmonization across datasets.
+}
+\details{
+This function generates a crosswalk table using a list of instruments and a similarity matrix,
+produced by the \code{\link{match_instruments}} function.
+
+
+A crosswalk is a mapping between conceptually similar items (e.g., survey questions or variables)
+from different instruments. It is used to identify and align comparable variables across datasets
+that use different formats or wordings. This is especially useful in meta-analysis, data integration,
+and comparative research, where consistent constructs need to be analyzed across multiple sources.
+
+The similarity matrix passed to this function is usually obtained from \code{\link{match_instruments}}.
 }
 \examples{
 \donttest{
@@ -57,4 +69,6 @@ crosswalk_table.df = generate_crosswalk_table(
 }
 \author{
 Alex Nikic
+
+Omar Hassoun
 }

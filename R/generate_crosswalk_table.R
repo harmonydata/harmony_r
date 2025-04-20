@@ -22,11 +22,22 @@
 
 #' Generate Crosswalk Table Function
 #'
-#' Generate a crosswalk table for a list of instruments, given the similarity matrix that came out of the match function.
-#' A crosswalk is a list of pairs of variables from different studies that can be harmonised.
+#' This function generates a crosswalk table using a list of instruments and a similarity matrix,
+#' produced by the \code{\link{match_instruments}} function.
 #'
+#' @description
+#' A crosswalk is a table that lists matched variables from different studies or instruments,
+#' enabling data harmonization across datasets.
+#'
+#' @details
+#' A crosswalk is a mapping between conceptually similar items (e.g., survey questions or variables)
+#' from different instruments. It is used to identify and align comparable variables across datasets
+#' that use different formats or wordings. This is especially useful in meta-analysis, data integration,
+#' and comparative research, where consistent constructs need to be analyzed across multiple sources.
+#'
+#' The similarity matrix passed to this function is usually obtained from \code{\link{match_instruments}}.
 #' @param instruments The original list of instruments, each containing a question. The sum of the number of questions in all instruments is the total number of questions which should equal both the width and height of the similarity matrix.
-#' @param similarity The cosine similarity matrix from Harmony
+#' @param similarity The cosine similarity matrix that is outputed from the \code{\link{match_instruments}} function.
 #' @param threshold The minimum threshold that we consider a match. This is applied to the absolute match value. So if a question pair has similarity 0.2 and threshold = 0.5, then that question pair will be excluded. Leave as None if you don't want to apply any thresholding.
 #' @param is_allow_within_instrument_matches Defaults to False. If this is set to True, we include crosswalk items that originate from the same instrument, which would otherwise be excluded by default.
 #' @param is_enforce_one_to_one Defaults to False.  If this is set to True, we force all variables in the crosswalk table to be matched with exactly one other variable.
@@ -61,6 +72,7 @@
 #'
 #' @export
 #' @author Alex Nikic
+#' @author Omar Hassoun
 
 
 generate_crosswalk_table <- function(
