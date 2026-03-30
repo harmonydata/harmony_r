@@ -97,7 +97,7 @@ We can view the first few rows of the similarity matrix for the questions.
 head(match$matches)
 ```
 
-We can also plot a heat map of the questions similarity matrix.
+We can also plot a heat map of the questions similarity matrix. Please bare in mind however that R will compress the matrix to fit the size of the plotting area, which may reduce the visible resolution for large matrices.
 
 ```{r}
 heatmap(as.matrix(match$matches), 
@@ -105,13 +105,19 @@ heatmap(as.matrix(match$matches),
         margins = c(10, 10))
 ```
 
-
-The first three entries in the similarity matrix for the response options are:
+We can view the first few rows of the similarity matrix for the response options.
 
 ```{r}
-match$response_options_similarity[[1]][c(1, 2, 3)]
+head(match$response_options_similarity)
 ```
 
+We can also plot a heat map of the response options similarity matrix.
+
+```{r}
+heatmap(as.matrix(match$response_options_similarity),
+        Rowv = NA, Colv = NA, main = "Response Options Similarity Matrix",
+        margins = c(10, 10))
+```
 
 ## Generate a Crosswalk table
 

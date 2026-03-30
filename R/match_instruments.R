@@ -154,7 +154,7 @@ match_instruments <- function(instruments,
         conten$clusters[[i]]$cluster_id <- conten$clusters[[i]]$cluster_id + 1
     }
 
-    # here we will convert the match_matrix to a data frame to avoid users boilerplating this code
+    # here we will convert the questions matrix to a data frame to avoid users boilerplating this code
     df <- data.frame(conten$matches[[1]])
     for (x in seq_along(conten$matches)) {
         df[x, ] <- conten$matches[[x]]
@@ -163,5 +163,16 @@ match_instruments <- function(instruments,
     rownames(df) <- lapply(conten$questions, function(x) paste(x$question_no, x$question_text, sep = " "))
     conten$matches <- df
     
+    # here we will also convert the response options similarity matrix to a data frame
+    if (length(conten$response_options_similarity) > 0) {
+        df_response_options <- data.frame(conten$response_options_similarity[[1]])
+        for (x in seq_along(conten$response_options_similarity)) {
+            df_response_options[x, ] <- conten$response_options_similarity[[x]]
+        }
+        colnames(df_response_options) <- lapply(conten$questions, function(x) paste(x$question_no, x$question_text, sep = " "))[seq_len(ncol(df_response_options))] # we add the [seq_len()] to account for the case when there are empty response options
+        rownames(df_response_options) <- lapply(conten$questions, function(x) paste(x$question_no, x$question_text, sep = " "))[seq_len(nrow(df_response_options))]
+        conten$response_options_similarity <- df_response_options
+    }
+
     return(conten)
 }
