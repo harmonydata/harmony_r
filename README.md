@@ -6,7 +6,7 @@
 # Harmony R library: harmonydata
 
 You can also **join our [Discord
-server](https://discord.gg/harmonydata)!**  
+server](https://discord.gg/TRFM3dqANu)!**  
 If you found Harmony helpful, you can [leave us a
 review](https://g.page/r/CaRWc2ViO653EBM/review)!
 
