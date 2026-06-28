@@ -1,12 +1,23 @@
-# harmonydata 0.2.1
+# harmonydata 0.3.2
 
-* Added a `NEWS.md` file to track changes to the package.
+## Bug Fixes
+* Fixed error when matching an instrument against itself caused by 
+  duplicate row names in the matches data frame (#22)
 
-## Version 0.2.1 (2025-03-03)
-### 🚀 New Features
-- Added `generate_crosswalk_table()` function.
-- Added `create_instruments_from_list()` function.
+## Improvements
+* Match matrix is now returned as a data frame instead of a list
+* Response options similarity matrix is now returned as a data frame
+* Added check for empty response options matrix to ensure stability
+* Added warning for image compression when generating heatmaps
+* Added supermarket data clustering example
 
-### 🔧 Improvements
-- Modified `load_instruments_for_file()` for better functionality.
-- Exposed `cluster` and `instrument` to `instrument_similarity()`, making them accessible for advanced analysis.
+## New Features
+* Users can now select the LLM model used for matching via the `model` 
+  parameter in `match_instruments()`
+* Added support for additional clustering algorithms: `kmeans`, 
+  `deterministic`, `hdbscan` in addition to the default 
+  `affinity_propagation`
+
+# harmonydata 0.3.1
+
+* Previous CRAN release

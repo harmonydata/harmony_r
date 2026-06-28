@@ -31,12 +31,14 @@ The Harmony API defaults to \code{is_negate = TRUE}, as some users prefer detect
 
 \item{...}{Optional named arguments:
 \describe{
-  \code{model} The HuggingFace model to be used by the matcher. Currently recommended models to use with Harmony are:
+  \item{model}{The HuggingFace model to be used by the matcher.
+    Currently recommended models:
     \itemize{
       \item \code{sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}
       \item \code{sentence-transformers/paraphrase-multilingual-mpnet-base-v2}
       \item \code{harmonydata/mental_health_harmonisation_1}
     }
+  }
 }}
 }
 \value{

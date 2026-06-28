@@ -41,12 +41,14 @@
 #'
 #' @param ... Optional named arguments:
 #' \describe{
-#'   \code{model} The HuggingFace model to be used by the matcher. Currently recommended models to use with Harmony are:
+#'   \item{model}{The HuggingFace model to be used by the matcher.
+#'     Currently recommended models:
 #'     \itemize{
 #'       \item \code{sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}
 #'       \item \code{sentence-transformers/paraphrase-multilingual-mpnet-base-v2}
 #'       \item \code{harmonydata/mental_health_harmonisation_1}
 #'     }
+#'   }
 #' }
 #'
 #' @return A list containing the matched instruments retrieved from the Harmony Data API. The returned object includes attributes such as the similarity matrix, identified clusters, associated cluster topics, and other relevant metadata.
@@ -134,6 +136,7 @@ match_instruments <- function(instruments,
 
     #from questions u need to delete anything after source page
     bod <- jsonlite::toJSON(instruments, pretty = TRUE, auto_unbox = TRUE)
+
     res <- httr::POST(
                       url = paste0(
                           pkg_globals$url,
@@ -159,18 +162,18 @@ match_instruments <- function(instruments,
     for (x in seq_along(conten$matches)) {
         df[x, ] <- conten$matches[[x]]
     }
-    colnames(df) <- lapply(conten$questions, function(x) paste(x$question_no, x$question_text, sep = " "))
-    rownames(df) <- lapply(conten$questions, function(x) paste(x$question_no, x$question_text, sep = " "))
+    colnames(df) <- make.unique(unlist(lapply(conten$questions, function(x) paste(x$question_no, x$question_text, sep = " "))))
+    rownames(df) <- make.unique(unlist(lapply(conten$questions, function(x) paste(x$question_no, x$question_text, sep = " "))))
     conten$matches <- df
-    
+
     # here we will also convert the response options similarity matrix to a data frame
     if (length(conten$response_options_similarity) > 0) {
         df_response_options <- data.frame(conten$response_options_similarity[[1]])
         for (x in seq_along(conten$response_options_similarity)) {
             df_response_options[x, ] <- conten$response_options_similarity[[x]]
         }
-        colnames(df_response_options) <- lapply(conten$questions, function(x) paste(x$question_no, x$question_text, sep = " "))[seq_len(ncol(df_response_options))] # we add the [seq_len()] to account for the case when there are empty response options
-        rownames(df_response_options) <- lapply(conten$questions, function(x) paste(x$question_no, x$question_text, sep = " "))[seq_len(nrow(df_response_options))]
+        colnames(df_response_options) <- make.unique(unlist(lapply(conten$questions, function(x) paste(x$question_no, x$question_text, sep = " ")))[seq_len(ncol(df_response_options))])
+        rownames(df_response_options) <- make.unique(unlist(lapply(conten$questions, function(x) paste(x$question_no, x$question_text, sep = " ")))[seq_len(nrow(df_response_options))])
         conten$response_options_similarity <- df_response_options
     }
 

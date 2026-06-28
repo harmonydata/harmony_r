@@ -11,3 +11,5 @@
 ^CITATION\.cff$
 ^\.lintr$
 ^\.github$
+^harmony_r_example\.html$
+^supermarket_data_clustering_example$
