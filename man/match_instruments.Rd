@@ -67,8 +67,7 @@ cloud-hosted models need API keys which the deployment has to hold. To match wit
 'OpenAI', 'Google' or 'Azure OpenAI', run the
 \href{https://github.com/harmonydata/harmonyapi}{'Harmony' API} yourself with the
 relevant keys set (for example \code{OPENAI_API_KEY}) and point this package at it
-with \code{\link{set_url}}. Asking for a model the API does not have available
-raises an error rather than silently falling back to another model.
+with \code{\link{set_url}}.
 }
 
 \examples{
