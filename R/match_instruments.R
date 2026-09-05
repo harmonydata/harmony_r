@@ -39,19 +39,37 @@
 #'
 #' @param clustering_algorithm A string value to select the clustering algorithm to use. Must be one of: "affinity_propagation", "kmeans", "deterministic", "hdbscan". Default is "affinity_propagation".
 #'
-#' @param ... Optional named arguments:
-#' \describe{
-#'   \item{model}{The HuggingFace model to be used by the matcher.
-#'     Currently recommended models:
-#'     \itemize{
-#'       \item \code{sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}
-#'       \item \code{sentence-transformers/paraphrase-multilingual-mpnet-base-v2}
-#'       \item \code{harmonydata/mental_health_harmonisation_1}
-#'     }
-#'   }
+#' @param model The large language model used to embed the questions. Defaults to
+#' \code{sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}. Call
+#' \code{\link{list_models}} to see the models the API you are connected to offers.
+#' The models the 'Harmony' API knows about are:
+#' \itemize{
+#'   \item \code{sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2} ('Hugging Face')
+#'   \item \code{sentence-transformers/paraphrase-multilingual-mpnet-base-v2} ('Hugging Face')
+#'   \item \code{harmonydata/mental_health_harmonisation_1} ('Hugging Face')
+#'   \item \code{text-embedding-ada-002} ('OpenAI')
+#'   \item \code{text-embedding-3-large} ('OpenAI')
+#'   \item \code{textembedding-gecko@@003} ('Google')
+#'   \item \code{textembedding-gecko-multilingual} ('Google')
+#'   \item \code{fds-text-embedding-ada-002} ('Azure OpenAI')
+#'   \item \code{fds-text-embedding-3-large} ('Azure OpenAI')
 #' }
 #'
+#' @param framework The framework the model belongs to: one of \code{"huggingface"},
+#' \code{"openai"}, \code{"google"} or \code{"azure_openai"}. Defaults to NULL, in
+#' which case it is inferred from \code{model}.
+#'
+#' @param ... Ignored. Present for backwards compatibility.
+#'
 #' @return A list containing the matched instruments retrieved from the Harmony Data API. The returned object includes attributes such as the similarity matrix, identified clusters, associated cluster topics, and other relevant metadata.
+#'
+#' @section Choosing a model:
+#' The public 'Harmony' API only serves the open 'Hugging Face' models, since the
+#' cloud-hosted models need API keys which the deployment has to hold. To match with
+#' 'OpenAI', 'Google' or 'Azure OpenAI', run the
+#' \href{https://github.com/harmonydata/harmonyapi}{'Harmony' API} yourself with the
+#' relevant keys set (for example \code{OPENAI_API_KEY}) and point this package at it
+#' with \code{\link{set_url}}.
 #'
 #' @examples
 #' \donttest{
@@ -82,6 +100,15 @@
 #' )
 #' }
 #'
+#' \dontrun{
+#' set_url("http://localhost:8000")
+#'
+#' matched_instruments <- match_instruments(
+#'   instruments,
+#'   model = "text-embedding-3-large"
+#' )
+#' }
+#'
 #' @import jsonlite
 #' @import httr
 #'
@@ -94,6 +121,8 @@ match_instruments <- function(instruments,
                               topics = list(),
                               is_negate = TRUE,
                               clustering_algorithm = "affinity_propagation",
+                              model = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+                              framework = NULL,
                               ...
                               ) {
     #most of the work is simply creating the body
@@ -126,13 +155,10 @@ match_instruments <- function(instruments,
     instruments[["topics"]] <- topics
 
     # allow the user to select which llm to use
-    kwargs <- list(...)
-    if ("model" %in% names(kwargs)) {
-      instruments[["parameters"]] <- list(
-        "framework" = "huggingface",
-        "model" = kwargs$model
-      )
-    }
+    instruments[["parameters"]] <- list(
+        "framework" = resolve_framework(model, framework),
+        "model" = model
+    )
 
     #from questions u need to delete anything after source page
     bod <- jsonlite::toJSON(instruments, pretty = TRUE, auto_unbox = TRUE)
@@ -144,6 +170,10 @@ match_instruments <- function(instruments,
                           "&clustering_algorithm=", clustering_algorithm
                       ),
                       httr::add_headers(.headers = headers), body = bod, encode = "json")
+
+    # if harmony API failed, raise an error
+    harmony_stop_for_status(res)
+
     #contents
     conten <- content(res)
 

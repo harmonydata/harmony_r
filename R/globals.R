@@ -50,3 +50,46 @@ pkg_globals$url <- "https://api.harmonydata.ac.uk"
 set_url <- function(harmony_url = "https://api.harmonydata.ac.uk") {
     pkg_globals$url <- harmony_url
 }
+
+#' Raise an error if the 'Harmony' API returned a failure status
+#'
+#' Converts an unsuccessful HTTP response from the 'Harmony' API into an R error
+#' carrying the \code{detail} message returned by the API, instead of letting the
+#' calling function fail later on an unexpected response body.
+#'
+#' @param res The response object returned by \code{httr::POST} or \code{httr::GET}.
+#' @keywords internal
+#'
+#' @return
+#' No return value, called for side effects.
+#'
+#' @importFrom httr status_code content
+#' @author Alex Nikic
+harmony_stop_for_status <- function(res) {
+    if (httr::status_code(res) < 400) {
+        return(invisible(NULL))
+    }
+
+    detail <- tryCatch(httr::content(res)$detail, error = function(e) NULL)
+    detail <- paste(unlist(detail), collapse = "; ")
+    if (!nzchar(detail)) {
+        detail <- "no further detail was returned by the API"
+    }
+
+    message <- paste0(
+        "The Harmony API at ", pkg_globals$url, " returned status ",
+        httr::status_code(res), ": ", detail
+    )
+
+    # a rejected model is the most likely cause of a failure here, so point the
+    # user at the list of models the API they are talking to actually offers
+    if (grepl("model", detail, ignore.case = TRUE)) {
+        message <- paste0(
+            message,
+            "\nCall list_models() to see the models available on this API, and see ",
+            "?set_url if you want to point the package at your own deployment."
+        )
+    }
+
+    stop(message, call. = FALSE)
+}

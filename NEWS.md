@@ -1,3 +1,20 @@
+# harmonydata 0.3.3
+
+## New Features
+* `match_instruments()` gains `model` and `framework` arguments, so the LLM used
+  for matching can be switched to any model the Harmony API offers, including the
+  cloud-hosted OpenAI, Google and Azure OpenAI models (#22). `model` was
+  previously only reachable through `...` and was always sent as a Hugging Face
+  model
+* The framework is inferred from the model name, so switching LLM usually only
+  needs `model`
+* New `list_models()` function, which reports the models the Harmony API you are
+  connected to knows about and whether each one is available
+
+## Improvements
+* Failed API requests now raise an R error carrying the message returned by the
+  API, instead of failing later with an unrelated error about the response
+
 # harmonydata 0.3.2
 
 ## Bug Fixes
