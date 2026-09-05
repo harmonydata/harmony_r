@@ -98,9 +98,11 @@
 #'   clustering_algorithm = "affinity_propagation",
 #'   model = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 #' )
+#' }
 #'
-#' # matching with a cloud-hosted model, on a Harmony API that has an OpenAI key
+#' \dontrun{
 #' set_url("http://localhost:8000")
+#'
 #' matched_instruments <- match_instruments(
 #'   instruments,
 #'   model = "text-embedding-3-large"
