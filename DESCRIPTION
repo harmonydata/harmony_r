@@ -1,7 +1,7 @@
 Package: harmonydata
 Type: Package
 Title: R Library for 'Harmony'
-Version: 0.3.2
+Version: 0.3.3
 Authors@R: c(
   person("Omar", "Hassoun", email = "omtarful@gmail.com", role = c("aut", "cre")),
   person("Thomas", "Wood", email = "thomas@fastdatascience.com", role = c("ctb")),
@@ -25,3 +25,4 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
+RoxygenNote: 7.3.1

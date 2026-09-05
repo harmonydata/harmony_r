@@ -9,6 +9,8 @@ match_instruments(
   topics = list(),
   is_negate = TRUE,
   clustering_algorithm = "affinity_propagation",
+  model = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  framework = NULL,
   ...
 )
 }
@@ -29,17 +31,27 @@ The Harmony API defaults to \code{is_negate = TRUE}, as some users prefer detect
 
 \item{clustering_algorithm}{A string value to select the clustering algorithm to use. Must be one of: "affinity_propagation", "kmeans", "deterministic", "hdbscan". Default is "affinity_propagation".}
 
-\item{...}{Optional named arguments:
-\describe{
-  \item{model}{The HuggingFace model to be used by the matcher.
-    Currently recommended models:
-    \itemize{
-      \item \code{sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}
-      \item \code{sentence-transformers/paraphrase-multilingual-mpnet-base-v2}
-      \item \code{harmonydata/mental_health_harmonisation_1}
-    }
-  }
+\item{model}{The large language model used to embed the questions. Defaults to
+\code{sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}. Call
+\code{\link{list_models}} to see the models the API you are connected to offers.
+The models the 'Harmony' API knows about are:
+\itemize{
+  \item \code{sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2} ('Hugging Face')
+  \item \code{sentence-transformers/paraphrase-multilingual-mpnet-base-v2} ('Hugging Face')
+  \item \code{harmonydata/mental_health_harmonisation_1} ('Hugging Face')
+  \item \code{text-embedding-ada-002} ('OpenAI')
+  \item \code{text-embedding-3-large} ('OpenAI')
+  \item \code{textembedding-gecko@003} ('Google')
+  \item \code{textembedding-gecko-multilingual} ('Google')
+  \item \code{fds-text-embedding-ada-002} ('Azure OpenAI')
+  \item \code{fds-text-embedding-3-large} ('Azure OpenAI')
 }}
+
+\item{framework}{The framework the model belongs to: one of \code{"huggingface"},
+\code{"openai"}, \code{"google"} or \code{"azure_openai"}. Defaults to NULL, in
+which case it is inferred from \code{model}.}
+
+\item{...}{Ignored. Present for backwards compatibility.}
 }
 \value{
 A list containing the matched instruments retrieved from the Harmony Data API. The returned object includes attributes such as the similarity matrix, identified clusters, associated cluster topics, and other relevant metadata.
@@ -48,6 +60,17 @@ A list containing the matched instruments retrieved from the Harmony Data API. T
 This function takes a list of instruments, converts it to a format acceptable by the database,
 and matches the instruments using the 'Harmony Data API'. It returns the matched instruments.
 }
+\section{Choosing a model}{
+
+The public 'Harmony' API only serves the open 'Hugging Face' models, since the
+cloud-hosted models need API keys which the deployment has to hold. To match with
+'OpenAI', 'Google' or 'Azure OpenAI', run the
+\href{https://github.com/harmonydata/harmonyapi}{'Harmony' API} yourself with the
+relevant keys set (for example \code{OPENAI_API_KEY}) and point this package at it
+with \code{\link{set_url}}. Asking for a model the API does not have available
+raises an error rather than silently falling back to another model.
+}
+
 \examples{
 \donttest{
 
@@ -74,6 +97,13 @@ matched_instruments <- match_instruments(
   is_negate = TRUE,
   clustering_algorithm = "affinity_propagation",
   model = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+)
+
+# matching with a cloud-hosted model, on a Harmony API that has an OpenAI key
+set_url("http://localhost:8000")
+matched_instruments <- match_instruments(
+  instruments,
+  model = "text-embedding-3-large"
 )
 }
 

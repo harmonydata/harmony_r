@@ -787,6 +787,55 @@ match$matches
 #> [1] 1
 ```
 
+## Choosing which LLM to use
+
+Harmony matches questions by embedding them with a large language model.
+By default it uses the open source Hugging Face model
+`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`. You can
+match with a different model by passing its name to
+`match_instruments()`:
+
+``` r
+match = match_instruments(
+  instruments,
+  model = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
+)
+```
+
+`list_models()` returns a data frame of the models the API you are
+connected to knows about, and whether each one is currently available:
+
+``` r
+list_models()
+```
+
+The public Harmony API only serves the open Hugging Face models. The
+cloud-hosted models (OpenAI, Google and Azure OpenAI) need API keys, and
+those are held by the API rather than by the R library, so they are
+reported as unavailable and asking for one raises an error.
+
+To match with a cloud-hosted LLM, run [the Harmony
+API](https://github.com/harmonydata/harmonyapi) yourself with the
+relevant key set, and point the R library at your own deployment:
+
+``` bash
+docker run -p 8000:80 -e OPENAI_API_KEY=sk-xxxxxxxx harmonydata/harmonyapi
+```
+
+``` r
+set_url("http://localhost:8000")
+
+# text-embedding-3-large is now reported as available
+list_models()
+
+match = match_instruments(instruments, model = "text-embedding-3-large")
+```
+
+The keys the Harmony API recognises are `OPENAI_API_KEY` for OpenAI,
+`GOOGLE_APPLICATION_CREDENTIALS` for Google Vertex AI, and
+`AZURE_OPENAI_API_KEY` together with `AZURE_OPENAI_ENDPOINT` for Azure
+OpenAI.
+
 # Running harmonydata locally from a docker image
 
 To run harmonydata locally, first you need to pull the docker image
